@@ -2,12 +2,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
+using API.Extantion;
+using API.Extensions;
+using API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class UsersController: BaseApiController
     {   
         private readonly DataContext _context;
@@ -16,12 +20,17 @@ namespace API.Controllers
             this._context = context;
         }  
        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        public async Task<ActionResult<PagedList<AppUser>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _context.Users.ToListAsync();
-            return users;
+            var query =  _context.Users.AsNoTracking();
+            var pagedList = await PagedList<AppUser>.CreateAsync(
+                query, userParams.PageNumber, userParams.PageSize);
+            Response.AddPaginationHeader(
+                pagedList.CurrentPage,pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages);
+
+            return Ok(pagedList);
         }
-        [Authorize]
+    
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
