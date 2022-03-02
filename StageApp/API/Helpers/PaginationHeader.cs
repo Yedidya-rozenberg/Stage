@@ -2,17 +2,16 @@ namespace API.Helpers
 {
     internal class PaginationHeader
     {
-        private int currentPage;
-        private int itemsPerPage;
-        private int totalItems;
-        private int totalPages;
-
         public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
         {
-            this.currentPage = currentPage;
-            this.itemsPerPage = itemsPerPage;
-            this.totalItems = totalItems;
-            this.totalPages = totalPages;
+            this.CurrentPage = currentPage;
+            this.ItemPerPage = itemsPerPage;
+            this.TotalItems = totalItems;
+            this.TotalPages = totalPages;
         }
+                public int CurrentPage { get; }
+        public int ItemPerPage { get; }
+        public int TotalItems { get; }
+        public int TotalPages { get; }
     }
 }
