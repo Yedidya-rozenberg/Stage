@@ -1,4 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { User } from '../models/user';
+// import { MembersService } from '../services/members.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+registerMode = false;
+Users:any;
+
+constructor(private http:HttpClient, 
+  // private membersService:MembersService, 
+  private router: Router ) { }
 
   ngOnInit(): void {
+    // if (this.membersService.user)
+    this.router.navigateByUrl('/members');
+  }
+  registerToggle(){
+    this.registerMode = !this.registerMode;
+  }
+
+  cancelRegisterMode($event: boolean){
+    this.registerMode = $event;
   }
 
 }
