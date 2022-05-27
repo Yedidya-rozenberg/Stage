@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   model:any = {};
   @Input() usersFromHomeComponent: any;
   @Output() cancelRegister = new EventEmitter<boolean>();
-  registerForm!: FormGroup;
+    registerForm!: FormGroup;
   maxDate: Date | undefined;
   validationErrors: string[] = [];
 
@@ -50,10 +50,9 @@ export class RegisterComponent implements OnInit {
   initializeForm(){
 
     this.registerForm = this.fb.group({
-      gender:['male'],
       knownAs:["", Validators.required],
-      city:["", Validators.required],
-      country:["", Validators.required],
+      email:["", [Validators.required, Validators.email]],
+      phoneNumber:["", [Validators.required, this.phoneNumber()]],
       dateOfBirth:["", Validators.required],
       username:["", Validators.required],
       password:["", [Validators.required, Validators.minLength(4),Validators.maxLength(8)]],
@@ -72,5 +71,11 @@ matchValue(matchTo:string):ValidatorFn{
     
   }
 }
-
+phoneNumber():ValidatorFn{
+  return(control:AbstractControl):ValidationErrors |null => {
+    const ControlValue = control.value;
+    return (parseInt(ControlValue)
+     )? null : {isNumber: true}
+}
+}
 }

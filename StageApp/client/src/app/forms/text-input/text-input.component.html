@@ -9,4 +9,6 @@
     <div *ngIf="ngControl.control?.errors?.['minlength']" class="invalid-feedback">{{label}} must be at least {{ngControl.control?.errors?.['minlength']['requiredLength']}} characters</div>
     <div *ngIf="ngControl.control?.errors?.['maxlength']" class="invalid-feedback">{{label}} must be at most {{ngControl.control?.errors?.['maxlength']['requiredLength']}} characters</div>
     <div *ngIf="ngControl.control?.errors?.['isMatching']" class="invalid-feedback">passwords do not match</div>
+    <div *ngIf="ngControl.control?.errors?.['email']" class="invalid-feedback">this is not a legal email</div>
+    <div *ngIf="ngControl.control?.errors?.['isNumber']" class="invalid-feedback">this is not a Number</div>
     </div>  
