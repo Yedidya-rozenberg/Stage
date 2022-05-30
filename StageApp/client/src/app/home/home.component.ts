@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
-// import { MembersService } from '../services/members.service';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +16,12 @@ registerMode = false;
 Users:any;
 
 constructor(private http:HttpClient, 
-  // private membersService:MembersService, 
+  private accountService:AccountService, 
   private router: Router ) { }
 
   ngOnInit(): void {
-    // if (this.membersService.user)
-    this.router.navigateByUrl('/members');
+    if (this.accountService.user)
+    this.router.navigateByUrl('/courses');
   }
   registerToggle(){
     this.registerMode = !this.registerMode;

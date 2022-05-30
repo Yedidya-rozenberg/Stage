@@ -12,6 +12,7 @@ import { SharedModule } from './modules/shared.module';
 import { RegisterComponent } from './register/register.component';
 import { TextInputComponent } from './forms/text-input/text-input.component';
 import { DateInputComponent } from './forms/date-input/date-input.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DateInputComponent } from './forms/date-input/date-input.component';
     RegisterComponent,
     TextInputComponent,
     DateInputComponent,
+    CoursesComponent,
   ],
   imports: [
     SharedModule,
