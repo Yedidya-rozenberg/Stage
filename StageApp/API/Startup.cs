@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Extantion;
 using API.Extensions;
+using API.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

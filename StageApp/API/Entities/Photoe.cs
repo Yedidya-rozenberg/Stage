@@ -12,6 +12,9 @@ namespace API.Entities
 
 
         public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
+        public int? AppUserId { get; set; }
+
+        public Course Course { get; set; }
+        public int? CourseID { get; set; }
     }
 }

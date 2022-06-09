@@ -5,11 +5,11 @@ using API.Entities;
 using AutoMapper;
 using API.Extensions;
 
-namespace API.helpers
+namespace API.Helpers
 {
-    public class AutoMapperProfile : Profile
+    public class AutoMapperProfiles : Profile
     {
-        public AutoMapperProfile()
+        public AutoMapperProfiles()
         {
             CreateMap<RegisterDto,AppUser>().ForMember(dest=>dest.UserName,
             opt=>opt.MapFrom(src=>src.Username.ToLower()));
