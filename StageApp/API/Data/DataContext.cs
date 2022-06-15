@@ -10,7 +10,10 @@ namespace API.Data
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Manager> Managers { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<Request> requests { get; set; }
+
     }
 }

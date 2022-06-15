@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Helpers
 {
-    public class PagedList<T> : List<T>
+    public class PageList<T> : List<T>
     {
-        public PagedList(
+        public PageList(
             IEnumerable<T> items,
             int count,
             int pageNumber,
@@ -27,7 +27,7 @@ namespace API.Helpers
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
 
-        public static async Task<PagedList<T>> CreateAsync (
+        public static async Task<PageList<T>> CreateAsync (
             IQueryable<T> source,
             int pageNumber,
             int pageSize
@@ -38,7 +38,7 @@ namespace API.Helpers
             .Take(pageSize)
             .ToListAsync();
         
-            return new PagedList<T>(items, count, pageNumber, pageSize);
+            return new PageList<T>(items, count, pageNumber, pageSize);
         }
 
     }

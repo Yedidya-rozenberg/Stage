@@ -20,15 +20,15 @@ namespace API.Controllers
             this._context = context;
         }  
        [HttpGet]
-        public async Task<ActionResult<PagedList<AppUser>>> GetUsers([FromQuery]UserParams userParams)
+        public async Task<ActionResult<PageList<AppUser>>> GetUsers([FromQuery]UserParams userParams)
         {
             var query =  _context.Users.AsNoTracking();
-            var pagedList = await PagedList<AppUser>.CreateAsync(
+            var pageList = await PageList<AppUser>.CreateAsync(
                 query, userParams.PageNumber, userParams.PageSize);
             Response.AddPaginationHeader(
-                pagedList.CurrentPage,pagedList.PageSize, pagedList.TotalCount, pagedList.TotalPages);
+                pageList.CurrentPage,pageList.PageSize, pageList.TotalCount, pageList.TotalPages);
 
-            return Ok(pagedList);
+            return Ok(pageList);
         }
     
         [HttpGet("{id}")]
