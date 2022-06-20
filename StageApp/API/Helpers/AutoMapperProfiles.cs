@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using System.Linq;
 using API.DTOs;
 using API.Entities;
 using AutoMapper;
@@ -13,6 +11,23 @@ namespace API.Helpers
         {
             CreateMap<RegisterDto,AppUser>().ForMember(dest=>dest.UserName,
             opt=>opt.MapFrom(src=>src.Username.ToLower()));
+
+            CreateMap<AppUser,MemberDto >()
+            .ForMember(
+                dest => dest.PhotoUrl,
+                opt => opt.MapFrom(src=>src.Photo.Url)
+            )
+            .ForMember(
+                dest=>dest.Age,
+                opt => opt.MapFrom(src=>src.DateOfBirth.CalculateAge())
+            );
+
+           CreateMap<Course,CourseDto>()
+           .ForMember(
+               dest=>dest.PhotoUrl,
+               opt=>opt.MapFrom(src=>src.Photo.Url)
+           ); 
         }
+        
     }
 }
