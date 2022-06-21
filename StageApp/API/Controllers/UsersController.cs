@@ -79,6 +79,7 @@ namespace API.Controllers
         {
             var username = User.GetUsername();
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
+            var oldPhoto = user.Photo;
 
             var result = await _photoService.UploadPhotoAsync(file);
 
@@ -86,10 +87,14 @@ namespace API.Controllers
             {
                 return BadRequest(result.Error.Message);
             }
+
+            
+            if(oldPhoto?.PublicId != null) await _photoService.DeletePhotoAsync(oldPhoto.PublicId);
+
             var photo = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
-                PublicId = result.PublicId
+                PublicId = result.PublicId,
             };
 
             user.Photo = photo;
@@ -102,7 +107,7 @@ namespace API.Controllers
             return BadRequest("Problem adding photos");
         }
 
-        [HttpDelete("delete-photo/{photoId}")]
+        [HttpDelete("delete-photo")]
         public async Task<ActionResult> DeletePhoto()
         {
             var username = User.GetUsername();

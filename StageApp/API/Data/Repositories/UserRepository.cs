@@ -29,6 +29,7 @@ namespace API.Data.Repositories
         public async Task<AppUser> GetUserByUserNameAsync(string userName)
         {
             return await _context.Users
+            .Include(u => u.Photo)
             .SingleOrDefaultAsync<AppUser>(x => x.UserName == userName);
         }
         public void Update(AppUser user)
@@ -64,7 +65,6 @@ namespace API.Data.Repositories
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync();
         }
-
     }
 
 }

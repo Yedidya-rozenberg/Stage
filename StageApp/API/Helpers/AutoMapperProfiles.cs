@@ -26,7 +26,10 @@ namespace API.Helpers
            .ForMember(
                dest=>dest.PhotoUrl,
                opt=>opt.MapFrom(src=>src.Photo.Url)
-           ); 
+           );
+
+            CreateMap<MemberUpdateDTO, AppUser>();
+            CreateMap<Photo,PhotoDto>();
         }
         
     }
