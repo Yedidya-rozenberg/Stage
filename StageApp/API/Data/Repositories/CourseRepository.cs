@@ -31,12 +31,7 @@ namespace API.Data.Repositories
         {
             return await _context.Courses.FindAsync(id);
         }
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
+        
         public void Update(Course course)
         {
             _context.Entry<Course>(course).State = EntityState.Modified;
@@ -52,8 +47,8 @@ namespace API.Data.Repositories
         {
           var query = CourseParams.Role  switch 
             {
-                 "Student"=> _context.Students.Include(s=>s.Courses).Where(s=>s.UserName==CourseParams.Name).Select(s=>s.Courses).FirstOrDefault().AsQueryable(),
-                 "Teacher"  => _context.Teachers.Include(t=>t.Courses).Where(t=>t.UserName==CourseParams.Name).Select(t=>t.Courses).FirstOrDefault().AsQueryable(),
+                 "Student"=> _context.Students.Include(s=>s.Courses).Where(s=>s.UserName==CourseParams.CurrentUser).Select(s=>s.Courses).FirstOrDefault().AsQueryable(),
+                 "Teacher"  => _context.Teachers.Include(t=>t.Courses).Where(t=>t.UserName==CourseParams.CurrentUser).Select(t=>t.Courses).FirstOrDefault().AsQueryable(),
                     _ => _context.Courses.AsQueryable(),
             };
             return await PageList<CourseDto>.CreateAsync(

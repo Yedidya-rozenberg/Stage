@@ -15,10 +15,7 @@ namespace API.Interfaces
         void addCourse(Course course);
         void UpdateCourseStatus(Course course, bool CourseStatus);
         void Update(Course course);
-
         Task<Course> GetCourseByIdAsync(int id);
-        Task<bool> SaveAllAsync();
-
 
     }
 }

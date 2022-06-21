@@ -15,5 +15,6 @@ namespace API.Entities
         public ICollection<Student> Students { get; set; }
 
         public ICollection<Unit> Units { get; set; }
+        public ICollection<Interest> CourseTags { get; set; }
     }
 }

@@ -36,12 +36,6 @@ namespace API.Data.Repositories
             _context.Entry<AppUser>(user).State = EntityState.Modified;
         }
 
-
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
 
@@ -54,7 +48,7 @@ namespace API.Data.Repositories
             }
             else
             {
-                var query = _context.Students.Include(s=>s.Courses).AsQueryable();
+                var query = _context.Students.Include(s => s.Courses).AsQueryable();
 
                 query = query.Where(s => s.Courses.Any(c => c.CourseID == userParams.CourseId));
                 return await PageList<MemberDto>.CreateAsync(
@@ -62,6 +56,15 @@ namespace API.Data.Repositories
                     userParams.PageNumber, userParams.PageSize);
             }
         }
+
+        public async Task<MemberDto> GetMemberAsync(string username)
+        {
+            return await _context.Users
+            .Where(x => x.UserName == username)
+            .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync();
+        }
+
     }
 
 }

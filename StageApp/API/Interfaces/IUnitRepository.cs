@@ -13,9 +13,6 @@ namespace API.Interfaces
         void RemoveUnit(int unitID, Course Course, int TeacherID);
 
         void Update(Unit unit,  int TeacherID);
-
-        Task<bool> SaveAllAsync();
-
         Task<Unit> GetUnitByIdAsync(int id);    
     }
 }

@@ -1,0 +1,62 @@
+//Stusents
+[
+  '{{repeat(5)}}',
+  {
+    UserName: '{{firstName("female")}}',
+    KnownAs: function(){ return this.UserName; },
+    PhoneNumber:'{{phone()}}',
+  Email:'{{email([random])}}',
+    DateOfBirth: '{{date(new Date(1950,0,1), new Date(2002, 11, 31), "YYYY-MM-dd")}}',
+    Created: '{{date(new Date(2019, 0, 1), new Date(2021,5,30), "YYYY-MM-dd")}}',
+    LastActive: '{{date(new Date(2020, 4, 1), new Date(2022,5,30), "YYYY-MM-dd")}}',
+    Photo:
+        {
+          Url: function(num) {
+          return 'https://randomuser.me/api/portraits/women/' + num.integer(1,99) + '.jpg';
+        }
+       },
+    IsActive:true,
+    Payment:'{{floating(1000, 10000, 2)}}'
+  }
+]
+//Teathers
+[
+  '{{repeat(2)}}',
+  {
+    UserName: '{{firstName("female")}}',
+    KnownAs: function(){ return this.UserName; },
+    PhoneNumber:'{{phone()}}',
+  Email:'{{email([random])}}',
+    DateOfBirth: '{{date(new Date(1950,0,1), new Date(2002, 11, 31), "YYYY-MM-dd")}}',
+    Created: '{{date(new Date(2019, 0, 1), new Date(2021,5,30), "YYYY-MM-dd")}}',
+    LastActive: '{{date(new Date(2020, 4, 1), new Date(2022,5,30), "YYYY-MM-dd")}}',
+    Photo:
+        {
+          Url: function(num) {
+          return 'https://randomuser.me/api/portraits/women/' + num.integer(1,99) + '.jpg';
+        }
+       },
+    IsActive:true,
+    Salary:'{{floating(5000, 15000, 2)}}'
+  }
+]
+//Meneger
+[
+  '{{repeat(1)}}',
+  {
+    UserName: '{{firstName("male")}}',
+    KnownAs: function(){ return this.UserName; },
+    PhoneNumber:'{{phone()}}',
+  Email:'{{email([random])}}',
+    DateOfBirth: '{{date(new Date(1950,0,1), new Date(2002, 11, 31), "YYYY-MM-dd")}}',
+    Created: '{{date(new Date(2019, 0, 1), new Date(2021,5,30), "YYYY-MM-dd")}}',
+    LastActive: '{{date(new Date(2020, 4, 1), new Date(2022,5,30), "YYYY-MM-dd")}}',
+    Photo:
+        {
+          Url: function(num) {
+          return 'https://randomuser.me/api/portraits/men/' + num.integer(1,99) + '.jpg';
+        }
+       },
+    IsActive:true,
+  }
+]
