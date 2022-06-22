@@ -65,6 +65,7 @@ namespace API.Data.Repositories
             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
             .SingleOrDefaultAsync();
         }
+
     }
 
 }

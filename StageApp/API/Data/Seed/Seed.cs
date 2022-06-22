@@ -19,9 +19,9 @@ namespace API.Data
 
             if (await context.Users.AnyAsync()) { return; }
 
-            await EnterUsersAsync<Student>(context, "Data/StudentSeedData.json");
-            await EnterUsersAsync<Teacher>(context, "Data/TeacherSeedData.json");
-            await EnterUsersAsync<Manager>(context, "Data/ManagerSeedData.json");
+            await EnterUsersAsync<Student>(context, "Data/Seed/StudentSeedData.json");
+            await EnterUsersAsync<Teacher>(context, "Data/Seed/TeacherSeedData.json");
+            await EnterCoursesAsync(context, "Data/Seed/CourseSeedData.json");
 
             await context.SaveChangesAsync();
         }
@@ -39,6 +39,16 @@ namespace API.Data
                 user.PasswordSalt = hmac.Key;
 
                 context.Add(user);
+            }
+        }
+        private static async Task EnterCoursesAsync(DataContext context, string path)
+        {
+            var CoursesData = await System.IO.File.ReadAllTextAsync(path);
+            var Courses = JsonSerializer.Deserialize<List<Course>>(CoursesData);
+
+            foreach (var course in Courses)
+            {
+                context.Add(course);
             }
         }
     }

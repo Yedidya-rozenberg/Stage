@@ -22,38 +22,59 @@ namespace API.Data.Repositories
             _mapper = mapper;
         }
 
-        public async void addCourse(Course course)
+        public async void AddCourse(Course course)
         {
-           await _context.Courses.AddAsync(course);
+            await _context.Courses.AddAsync(course);
         }
 
         public async Task<Course> GetCourseByIdAsync(int id)
         {
             return await _context.Courses.FindAsync(id);
         }
-        
+
         public void Update(Course course)
         {
             _context.Entry<Course>(course).State = EntityState.Modified;
         }
 
-        public void UpdateCourseStatus(Course course, bool CourseStatus)
-        {
-            course.CourseStatus = CourseStatus;
-            _context.Entry<Course>(course).State = EntityState.Modified;            
-        }
 
-        public async Task<PageList<CourseDto>> ViewCuorsesList(CourseParams CourseParams)
+        public async Task<PageList<CourseDto>> GetCoursesAsync(CourseParams CourseParams)
         {
-          var query = CourseParams.Role  switch 
+            IQueryable<Course> query;
+
+
+            query = CourseParams.Role switch
             {
-                 "Student"=> _context.Students.Include(s=>s.Courses).Where(s=>s.UserName==CourseParams.CurrentUser).Select(s=>s.Courses).FirstOrDefault().AsQueryable(),
-                 "Teacher"  => _context.Teachers.Include(t=>t.Courses).Where(t=>t.UserName==CourseParams.CurrentUser).Select(t=>t.Courses).FirstOrDefault().AsQueryable(),
-                    _ => _context.Courses.AsQueryable(),
+                "Student" => _context.Students.Include(s => s.Courses).Where(s => s.UserName == CourseParams.CurrentUser).Select(s => s.Courses).FirstOrDefault().AsQueryable(),
+                "Teacher" => _context.Teachers.Include(t => t.Courses).Where(t => t.UserName == CourseParams.CurrentUser).Select(t => t.Courses).FirstOrDefault().AsQueryable(),
+                _ => _context.Courses.Where(c => c.CourseStatus == true).AsQueryable(),
             };
+
+            if (CourseParams.TeacherName != null)
+            {
+                var queryByTeacher = _context.Courses
+                 .Include(c => c.Teacher)
+                 .Where(c => c.Teacher.KnownAs.ToLower() == CourseParams.TeacherName.ToLower());
+
+                query = from c in query
+                        join ct in queryByTeacher on c.CourseID equals ct.CourseID
+                        select c;
+            }
+
+
             return await PageList<CourseDto>.CreateAsync(
                 query.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).AsNoTracking(),
                 CourseParams.PageNumber, CourseParams.PageSize);
+        }
+
+        public async void DisableCourse(Course course)
+        {
+            var courseToDisable = await _context.Courses.Include(c=>c.Students).Where(c=>c==course).FirstOrDefaultAsync();
+            foreach (var student in courseToDisable.Students)
+            {
+               courseToDisable.Students.Remove(student);
+            }
+            courseToDisable.CourseStatus = false;
         }
     }
 }

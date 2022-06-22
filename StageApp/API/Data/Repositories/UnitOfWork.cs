@@ -21,7 +21,6 @@ namespace API.Data.Repositories
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public ICourseRepository CourseRepository => new CourseRepository(_context, _mapper);
         public IUnitRepository UnitRepository => new UnitRepository(_context);
-        public IRequestRepository RequestRepository => new RequestRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

@@ -10,7 +10,6 @@ namespace API.Interfaces
         IUserRepository UserRepository { get; }
         ICourseRepository CourseRepository { get; }
         IUnitRepository UnitRepository { get; }
-        IRequestRepository RequestRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
 

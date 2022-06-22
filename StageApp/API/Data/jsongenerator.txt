@@ -40,23 +40,21 @@
     Salary:'{{floating(5000, 15000, 2)}}'
   }
 ]
-//Meneger
+//course
 [
-  '{{repeat(1)}}',
+  '{{repeat(10)}}',
   {
-    UserName: '{{firstName("male")}}',
-    KnownAs: function(){ return this.UserName; },
-    PhoneNumber:'{{phone()}}',
-  Email:'{{email([random])}}',
-    DateOfBirth: '{{date(new Date(1950,0,1), new Date(2002, 11, 31), "YYYY-MM-dd")}}',
-    Created: '{{date(new Date(2019, 0, 1), new Date(2021,5,30), "YYYY-MM-dd")}}',
-    LastActive: '{{date(new Date(2020, 4, 1), new Date(2022,5,30), "YYYY-MM-dd")}}',
-    Photo:
-        {
-          Url: function(num) {
-          return 'https://randomuser.me/api/portraits/men/' + num.integer(1,99) + '.jpg';
-        }
-       },
-    IsActive:true,
+    CourseName:'{{lorem( 3, "words")}}',
+    CourseStatus:true,
+    Photo:{ Url:'https://picsum.photos/300/200'},
+    TeacherID:'{{integer(3,6)}}',
+    Units:[
+      '{{repeat(integer(3,6))}}',
+      {
+      UnitName:'{{lorem( 1, "words")}}',
+              StudyContent: '{{lorem (integer(3,6), "paragraphs")}}',
+        Questions: '{{lorem(integer(3,6), "sentences")}}'
+      }
+      ]
   }
 ]

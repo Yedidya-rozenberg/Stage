@@ -11,11 +11,10 @@ namespace API.Interfaces
 {
     public interface ICourseRepository
     {
-        Task<PageList<CourseDto>> ViewCuorsesList(CourseParams CourseParams);
-        void addCourse(Course course);
-        void UpdateCourseStatus(Course course, bool CourseStatus);
+        Task<PageList<CourseDto>> GetCoursesAsync(CourseParams CourseParams);
+        void AddCourse(Course course);
         void Update(Course course);
         Task<Course> GetCourseByIdAsync(int id);
-
+        void DisableCourse(Course course);
     }
 }
