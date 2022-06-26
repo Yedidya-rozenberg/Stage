@@ -12,5 +12,6 @@ namespace API.DTOs
         public bool CourseStatus { get; set; }
         public string PhotoUrl { get; set; }
         public int TeacherID { get; set; }
+        public string TeacherName { get; set; }
     }
 }

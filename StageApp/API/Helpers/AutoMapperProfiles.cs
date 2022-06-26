@@ -9,28 +9,36 @@ namespace API.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<RegisterDto,AppUser>().ForMember(dest=>dest.UserName,
-            opt=>opt.MapFrom(src=>src.Username.ToLower()));
+            CreateMap<RegisterDto, AppUser>().ForMember(dest => dest.UserName,
+            opt => opt.MapFrom(src => src.Username.ToLower()));
 
-            CreateMap<AppUser,MemberDto >()
+            CreateMap<AppUser, MemberDto>()
             .ForMember(
                 dest => dest.PhotoUrl,
-                opt => opt.MapFrom(src=>src.Photo.Url)
+                opt => opt.MapFrom(src => src.Photo.Url)
             )
             .ForMember(
-                dest=>dest.Age,
-                opt => opt.MapFrom(src=>src.DateOfBirth.CalculateAge())
+                dest => dest.Age,
+                opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
             );
 
-           CreateMap<Course,CourseDto>()
-           .ForMember(
-               dest=>dest.PhotoUrl,
-               opt=>opt.MapFrom(src=>src.Photo.Url)
-           );
+            CreateMap<Course, CourseDto>()
+            .ForMember(
+                dest => dest.PhotoUrl,
+                opt => opt.MapFrom(src => src.Photo.Url)
+            ).ForMember(
+                dest => dest.TeacherName,
+                opt => opt.MapFrom(src => src.Teacher.UserName)
+            );
 
             CreateMap<MemberUpdateDTO, AppUser>();
-            CreateMap<Photo,PhotoDto>();
+
+            CreateMap<Photo, PhotoDto>();
+
+            CreateMap<Unit, UnitDto>();
+
+            CreateMap<CourseUpdateDto, Course>();
         }
-        
+
     }
 }

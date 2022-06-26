@@ -15,6 +15,7 @@ namespace API.Interfaces
         void AddCourse(Course course);
         void Update(Course course);
         Task<Course> GetCourseByIdAsync(int id);
+        Task<CourseDto> GetCourseByNameAsync(string name);
         void DisableCourse(Course course);
     }
 }

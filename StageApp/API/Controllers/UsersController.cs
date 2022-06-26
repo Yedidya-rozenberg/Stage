@@ -133,5 +133,14 @@ namespace API.Controllers
             return BadRequest("Failed to delete photo");
         }
 
+        
+        //register student to course
+
+        //unregister student from course
+
+        //get students of course - in users controller
+
+        //get teacher of course - in users controller
+
     }
 }

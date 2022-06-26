@@ -45,10 +45,14 @@
   '{{repeat(10)}}',
   {
     CourseName:'{{lorem( 3, "words")}}',
-    CourseStatus:true,
+    CourseStatus:1,
     Photo:{ Url:'https://picsum.photos/300/200'},
-    TeacherID:'{{integer(3,6)}}',
-    Units:[
+    TeacherID:'{{integer(11,14)}}',
+  }
+]
+
+    //Units
+    [
       '{{repeat(integer(3,6))}}',
       {
       UnitName:'{{lorem( 1, "words")}}',
@@ -56,5 +60,8 @@
         Questions: '{{lorem(integer(3,6), "sentences")}}'
       }
       ]
-  }
-]
+      
+    Students:[
+      '{{repeat(integer(0,10))}}',
+    {Id: '{{(integer(1,10))}}'}
+    ]

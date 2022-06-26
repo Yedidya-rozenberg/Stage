@@ -1,3 +1,4 @@
+using API.Entities;
 using API.Helpers;
 
 namespace API.Helpers
@@ -6,11 +7,10 @@ namespace API.Helpers
     {
         public bool MyCourses { get; set; } = false;
         
-        public string Role { get; set; }
-
         public string CurrentUser { get; set; }
 
         public string TeacherName { get; set; }
+
         
     }
 }

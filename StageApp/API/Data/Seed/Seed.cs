@@ -1,14 +1,12 @@
 using System.Text;
-using System.Threading;
 using System.Security.Cryptography;
-using System.Runtime.Serialization.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using API.Entities;
+using System;
+using Microsoft.Extensions.Logging;
 
 namespace API.Data
 {
@@ -19,17 +17,60 @@ namespace API.Data
 
             if (await context.Users.AnyAsync()) { return; }
 
-            await EnterUsersAsync<Student>(context, "Data/Seed/StudentSeedData.json");
+            var students = await EnterUsersAsync<Student>(context, "Data/Seed/StudentSeedData.json");
             await EnterUsersAsync<Teacher>(context, "Data/Seed/TeacherSeedData.json");
-            await EnterCoursesAsync(context, "Data/Seed/CourseSeedData.json");
+            var courses = await EnterCourseUnitsAsync(context);
+            await EnterStudentsAsync(context, students, courses);
 
+        }
+
+        private static async Task<List<Course>> EnterCourseUnitsAsync(DataContext context)
+        {
+            var random = new Random();
+
+            var courses = await AsList<Course>("Data/Seed/CourseSeedData.json");
+            var units = await AsList<Unit>("Data/Seed/UnitSeedData.json");
+
+
+            foreach (var course in courses)
+            {
+                course.Units = new List<Unit>();
+                context.Add(course);
+            }
+            await context.SaveChangesAsync();
+
+            foreach (var unit in units)
+            {
+                var course = courses[random.Next(0, courses.Count)];
+                course.Units.Add(unit);
+            }
+            await context.SaveChangesAsync();
+            return courses;
+        }
+
+        private static async Task EnterStudentsAsync(DataContext context, List<Student> students, List<Course> courses)
+        {
+            var random = new Random();
+
+            for (int i = 0; i < 30; i++)
+            {
+                var course = courses[random.Next(0, courses.Count)];
+                course.Students.Add(students[random.Next(0, students.Count)]);
+            }
             await context.SaveChangesAsync();
         }
 
-        private static async Task EnterUsersAsync<T>(DataContext context, string path) where T : AppUser
+        private static async Task<List<T>> AsList<T>(string path)
         {
-            var UsersData = await System.IO.File.ReadAllTextAsync(path);
-            var Users = JsonSerializer.Deserialize<List<T>>(UsersData);
+            var data = await System.IO.File.ReadAllTextAsync(path);
+            var list = JsonSerializer.Deserialize<List<T>>(data);
+            return list;
+        }
+
+        private static async Task<List<T>> EnterUsersAsync<T>(DataContext context, string path) where T : AppUser
+        {
+
+            var Users = await AsList<T>(path);
 
             foreach (var user in Users)
             {
@@ -40,16 +81,8 @@ namespace API.Data
 
                 context.Add(user);
             }
-        }
-        private static async Task EnterCoursesAsync(DataContext context, string path)
-        {
-            var CoursesData = await System.IO.File.ReadAllTextAsync(path);
-            var Courses = JsonSerializer.Deserialize<List<Course>>(CoursesData);
-
-            foreach (var course in Courses)
-            {
-                context.Add(course);
-            }
+            await context.SaveChangesAsync();
+            return Users;
         }
     }
 }

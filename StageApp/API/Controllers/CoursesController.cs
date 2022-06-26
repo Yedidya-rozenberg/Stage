@@ -4,6 +4,7 @@ using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Helpers;
+using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,17 +14,18 @@ namespace API.Controllers
     [Authorize]
     public class CoursesController : BaseApiController
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CoursesController(UnitOfWork unitOfWork, IMapper mapper)
+        public CoursesController(IUnitOfWork unitOfWork, IMapper mapper)
+
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<PageList<CourseDto>>> GetCourses(CourseParams courseParams)
+        public async Task<ActionResult<PageList<CourseDto>>> GetCourses([FromQuery] CourseParams courseParams)
         {
             PageList<CourseDto> courses;
             if (!courseParams.MyCourses)
@@ -34,7 +36,6 @@ namespace API.Controllers
             {
                 var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
                 courseParams.CurrentUser = user.UserName;
-                courseParams.Role = user.GetType().ToString();
                 courses = await _unitOfWork.CourseRepository.GetCoursesAsync(courseParams);
             }
             Response.AddPaginationHeader(
@@ -45,35 +46,40 @@ namespace API.Controllers
             return Ok(courses);
         }
 
-        [HttpGet("{id}", Name = "GetCourse")]
-        public async Task<ActionResult<CourseDto>> GetCourse(int id)
+        [HttpGet("{courseName}", Name = "GetCourse")]
+        public async Task<ActionResult<CourseDto>> GetCourse(string courseName)
         {
-            var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(id);
+            var course = await _unitOfWork.CourseRepository.GetCourseByNameAsync(courseName);
             if (course == null)
             {
                 return NotFound();
             }
             if (course.CourseStatus == false)
             {
-                return BadRequest("Course is not active");
+                var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+                if (user.Id != course.TeacherID)
+                {
+                    return BadRequest("Course is not active");
+                }
             }
             return Ok(course);
         }
 
         [HttpPost]
-        public async Task<ActionResult<CourseDto>> CreateCourse(CourseForCreationDto courseForCreationDto)
+        public async Task<ActionResult<CourseDto>> CreateCourse(CourseUpdateDto courseUpdateDto)
         {
             var teacher = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             if (teacher.GetType() != typeof(Teacher))
             {
                 return Unauthorized("You are not a teacher");
             }
-            var course = _mapper.Map<Course>(courseForCreationDto);
+            var course = _mapper.Map<Course>(courseUpdateDto);
             course.Teacher = teacher as Teacher;
             _unitOfWork.CourseRepository.AddCourse(course);
             if (await _unitOfWork.Complete())
             {
-                return CreatedAtRoute("GetCourse", new { id = course.CourseID }, _mapper.Map<CourseDto>(course));
+                
+                return CreatedAtRoute("GetCourse", new { courseName = course.CourseName }, _mapper.Map<CourseDto>(course));
             }
             return BadRequest("Could not add course");
         }
@@ -82,14 +88,15 @@ namespace API.Controllers
         public async Task<ActionResult<CourseDto>> UpdateCourse(int id, CourseUpdateDto courseUpdateDto)
         {
             var teacher = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
-            if (teacher.GetType() != typeof(Teacher)) return Unauthorized("You are not a teacher");
+            if (!(teacher is Teacher)) return Unauthorized("You are not a teacher");
 
             var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(id);
             if (course == null) return NotFound();
 
             if (teacher.Id != course.TeacherID) return Unauthorized("You are not the teacher of this course");
- 
+
             _mapper.Map(courseUpdateDto, course);
+
             _unitOfWork.CourseRepository.Update(course);
             if (await _unitOfWork.Complete())
             {
@@ -109,25 +116,13 @@ namespace API.Controllers
 
             if (teacher.Id != course.TeacherID) return Unauthorized("You are not the teacher of this course");
 
-             _unitOfWork.CourseRepository.DisableCourse(course);
+            _unitOfWork.CourseRepository.DisableCourse(course);
             if (await _unitOfWork.Complete())
             {
                 return Ok(_mapper.Map<CourseDto>(course));
             }
             return BadRequest("Could not delete course");
         }
-
-        //register student to course
-        
-        //unregister student from course
-
-        //get students of course - in users controller
-
-        //get teacher of course - in users controller
-
-        //get course which units
-
-        //enter to unit - in unitController
 
 
 
