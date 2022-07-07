@@ -9,14 +9,17 @@ namespace API.Interfaces
 {
     public interface IUnitRepository
     {
-        void AddUnit(Unit unit, int CourseID,  int TeacherID);
+        void AddUnit(CreateUnirDto unit);
 
-        void RemoveUnit(int unitID, Course Course, int TeacherID);
+        void RemoveUnit(int unitID);
 
-        void Update(Unit unit,  int TeacherID);
-        Task<UnitDto> GetUnitByIdAsync(int id);   
+        void Update(Unit unit);
+        Task<UnitDto> GetUnitByIdAsync(int id);
 
-        Task<IEnumerable<UnitDto>> GetUnitsByCourseIdAsync(int courseID);
+        Task<UnitDto> GetUnitByNameAsync(string name);
+
+
+        Task<PageList<UnitDto>> GetUnitsByCourseIdAsync(UnitParams unitParams);
 
     }
 }

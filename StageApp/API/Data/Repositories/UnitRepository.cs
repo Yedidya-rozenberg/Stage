@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data.Repositories
@@ -19,31 +21,43 @@ namespace API.Data.Repositories
             _mapper = mapper;
         }
 
-        public void AddUnit(Unit unit, int CourseID, int TeacherID)
+        public async void AddUnit(CreateUnirDto unit)
         {
-            throw new System.NotImplementedException();
+            var course = await _context.Courses.Include(c=>c.Units).Where(c=>c.CourseID== unit.CourseID).FirstOrDefaultAsync();
+            course.Units.Add(_mapper.Map<Unit>(unit));
         }
 
-        public Task<UnitDto> GetUnitByIdAsync(int id)
+        public async Task<UnitDto> GetUnitByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+
+            var unit = await _context.Units.FindAsync(id);
+            return _mapper.Map<UnitDto>(unit);
         }
 
-        public async Task<IEnumerable<UnitDto>> GetUnitsByCourseIdAsync(int courseID)
+        public async Task<UnitDto> GetUnitByNameAsync(string name)
         {
-            var course = await _context.Courses.Include(c => c.Units).FirstOrDefaultAsync(c => c.CourseID == courseID);
-            var units = _mapper.Map<IEnumerable<Unit>, IEnumerable<UnitDto>>(course.Units);
-            return units;
+            var unit = await _context.Units.FirstOrDefaultAsync(u => u.UnitName == name);
+            return _mapper.Map<UnitDto>(unit);
         }
 
-        public void RemoveUnit(int unitID, Course Course, int TeacherID)
+        public async Task<PageList<UnitDto>> GetUnitsByCourseIdAsync(UnitParams unitParams)
         {
-            throw new System.NotImplementedException();
+            var units = _context.Units.AsQueryable();
+            units = units.Where(u=>u.CourseID ==unitParams.CourseId).OrderBy(u=>u.UnitID);
+            return await PageList<UnitDto>.CreateAsync(units.ProjectTo<UnitDto>(_mapper.ConfigurationProvider).AsNoTracking(), unitParams.PageNumber, unitParams.PageSize);
         }
 
-        public void Update(Unit unit, int TeacherID)
+        public void RemoveUnit(int unitID)
         {
-            throw new System.NotImplementedException();
+            var unit = _context.Units.Find(unitID);
+            _context.Units.Remove(unit);
         }
+
+
+        public void Update(Unit unit)
+        {
+            _context.Entry<Unit>(unit).State = EntityState.Modified;
+        }
+
     }
 }

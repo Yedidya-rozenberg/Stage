@@ -29,7 +29,7 @@ namespace API.Controllers
             _photoService = photoService;
         }
         [HttpGet]
-        public async Task<ActionResult<PageList<AppUser>>> GetUsers([FromQuery] UserParams userParams)
+        public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
 
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
@@ -52,6 +52,14 @@ namespace API.Controllers
         {
             var rtn = await _unitOfWork.UserRepository.GetMemberAsync(username);
 
+            return rtn;
+        }
+
+        [HttpGet("my-profile", Name = "GetMyProfile")]
+        public async Task<ActionResult<PrivetMemberDto>> GetMyProfile()
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+            var rtn = _mapper.Map<PrivetMemberDto>(user);
             return rtn;
         }
 
@@ -132,15 +140,6 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete photo");
         }
-
-        
-        //register student to course
-
-        //unregister student from course
-
-        //get students of course - in users controller
-
-        //get teacher of course - in users controller
 
     }
 }

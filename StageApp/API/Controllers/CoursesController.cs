@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data.Repositories;
 using API.DTOs;
@@ -78,7 +79,7 @@ namespace API.Controllers
             _unitOfWork.CourseRepository.AddCourse(course);
             if (await _unitOfWork.Complete())
             {
-                
+
                 return CreatedAtRoute("GetCourse", new { courseName = course.CourseName }, _mapper.Map<CourseDto>(course));
             }
             return BadRequest("Could not add course");
@@ -124,7 +125,51 @@ namespace API.Controllers
             return BadRequest("Could not delete course");
         }
 
+        //register student to course
+        [HttpPut("register")]
+        public async Task<ActionResult<CourseDto>> RegisterStudent(int courseId)
+        {
+            var student = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+            if (student.GetType() != typeof(Student)) return Unauthorized("You are not a student");
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
+            if (course == null) return NotFound();
+            if (course.CourseStatus == false) return BadRequest("Course is not active");
+            if (await _unitOfWork.CourseRepository.CheckStudentCourse(courseId, student.Id)) return BadRequest("You are already registered to this course");
+            _unitOfWork.CourseRepository.RegisterStudentToCourse(courseId, student as Student);
+            if(await _unitOfWork.Complete())
+            {
+                return Ok(_mapper.Map<CourseDto>(course));
+            }
+            return BadRequest("Could not register student");
+        }
 
+        //unregister student from course
+        [HttpDelete("unregister")]
+        public async Task<ActionResult> UnregisterStudent(int courseId)
+        {
+            var student = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+            if (student.GetType() != typeof(Student)) return Unauthorized("You are not a student");
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
+            if (course == null) return NotFound();
+            if (course.CourseStatus == false) return BadRequest("Course is not active");
+            if (!await _unitOfWork.CourseRepository.CheckStudentCourse(courseId, student.Id)) return BadRequest("You are not registered to this course");
+            _unitOfWork.CourseRepository.UnregisterStudentFromCourse(courseId, student as Student);
+            if (await _unitOfWork.Complete())
+            {
+                return Ok("Student unregistered");
+            }
+            return BadRequest("Could not unregister student");
+        }
+        [HttpGet("students/{courseId}")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetStudents(int courseId)
+        {
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(courseId);
+            if (course == null) return NotFound();
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+            if (user.Id != course.TeacherID) return Unauthorized("You are not the teacher of this course");
+            var students = await _unitOfWork.CourseRepository.GetStudentsByCourseIdAsync(courseId);
+            return Ok(students);
+        }
 
     }
 }

@@ -36,8 +36,18 @@ namespace API.Helpers
             CreateMap<Photo, PhotoDto>();
 
             CreateMap<Unit, UnitDto>();
+            CreateMap<CreateUnirDto,Unit>();
 
             CreateMap<CourseUpdateDto, Course>();
+
+            CreateMap<AppUser, PrivetMemberDto>()
+            .ForMember(dest => dest.PhotoUrl,
+                opt => opt.MapFrom(src => src.Photo.Url)
+            )
+            .ForMember(
+                dest => dest.Age,
+                opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
+            );
         }
 
     }

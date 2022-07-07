@@ -17,5 +17,15 @@ namespace API.Interfaces
         Task<Course> GetCourseByIdAsync(int id);
         Task<CourseDto> GetCourseByNameAsync(string name);
         void DisableCourse(Course course);
+
+        Task<IEnumerable<MemberDto>> GetStudentsByCourseIdAsync(int id);
+
+        void RegisterStudentToCourse(int courseId, Student student);
+
+        void UnregisterStudentFromCourse(int courseId, Student student);
+
+        //checkStudentCourse
+        Task<bool> CheckStudentCourse(int courseId, int studentId);
+        
     }
 }
