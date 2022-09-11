@@ -35,7 +35,15 @@ namespace API.Helpers
 
             CreateMap<Photo, PhotoDto>();
 
-            CreateMap<Unit, UnitDto>();
+            CreateMap<Unit, UnitDto>()
+            .ForMember(
+                dest => dest.NextUnitId,
+                opt => opt.MapFrom(src => src.Node.NextId)
+            ).ForMember(
+                dest => dest.BackUnitId,
+                opt => opt.MapFrom(src => src.Node.PreviousId)
+            );
+
             CreateMap<CreateUnitDto,Unit>();
 
             CreateMap<CourseUpdateDto, Course>();

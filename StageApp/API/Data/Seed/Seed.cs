@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using System.Collections.Generic;
@@ -42,6 +43,12 @@ namespace API.Data
             foreach (var unit in units)
             {
                 var course = courses[random.Next(0, courses.Count)];
+                var backUnit = course.Units.Count > 0 ? course.Units.Where(u => u.Node.NextId == null).FirstOrDefault() : null;
+                if (backUnit != null)
+                {
+                    backUnit.Node.NextId = unit.UnitID;
+                    unit.Node.PreviousId = backUnit.UnitID;
+                }
                 course.Units.Add(unit);
             }
             await context.SaveChangesAsync();

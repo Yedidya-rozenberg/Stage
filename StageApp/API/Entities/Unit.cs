@@ -12,6 +12,9 @@ namespace API.Entities
 
         public string StudyContent { get; set; }
         public string Questions { get; set; }
-        
+
+        public int NodeId { get; set; }
+        public LinkedEntityNode Node { get; set; } = new LinkedEntityNode();
+
     }
 }
