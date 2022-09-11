@@ -86,7 +86,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<UnitDto>> CreateUnit(CreateUnirDto unit)
+        public async Task<ActionResult<UnitDto>> CreateUnit(CreateUnitDto unit)
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(unit.CourseID);

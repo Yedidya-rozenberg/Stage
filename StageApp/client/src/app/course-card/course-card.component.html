@@ -1,1 +1,10 @@
-<p>course-card works!</p>
+<div class="card mb-4" >
+    <div class="card-img-wrapper">
+      <img class="card-img-top" [src]="course.photoUrl || './assets/course.png'" alt="{{course.courseName}}">
+    </div>
+    <div class="card-body p-1">
+      <p class="card-text text-center">
+        {{course.courseName}}
+      </p>
+    </div>
+  </div>

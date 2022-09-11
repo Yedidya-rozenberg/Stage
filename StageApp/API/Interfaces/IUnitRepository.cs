@@ -9,7 +9,7 @@ namespace API.Interfaces
 {
     public interface IUnitRepository
     {
-        void AddUnit(CreateUnirDto unit);
+        void AddUnit(CreateUnitDto unit);
 
         void RemoveUnit(int unitID);
 

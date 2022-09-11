@@ -1,6 +1,6 @@
 namespace API.DTOs
 {
-    public class CreateUnirDto
+    public class CreateUnitDto
     {
         public int CourseID { get; set; }
         public string UnitName { get; set; }

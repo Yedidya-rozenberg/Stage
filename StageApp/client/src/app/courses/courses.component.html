@@ -1,1 +1,6 @@
-<p>courses works!</p>
+
+  <div class="row">
+    <div class="col-2" *ngFor="let course of courses">
+        <app-course-card [course]="$any(course)"></app-course-card>    
+    </div>
+</div>

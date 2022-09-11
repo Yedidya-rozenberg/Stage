@@ -21,7 +21,7 @@ namespace API.Data.Repositories
             _mapper = mapper;
         }
 
-        public async void AddUnit(CreateUnirDto unit)
+        public async void AddUnit(CreateUnitDto unit)
         {
             var course = await _context.Courses.Include(c=>c.Units).Where(c=>c.CourseID== unit.CourseID).FirstOrDefaultAsync();
             course.Units.Add(_mapper.Map<Unit>(unit));

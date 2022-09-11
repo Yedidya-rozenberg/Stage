@@ -36,7 +36,7 @@ namespace API.Helpers
             CreateMap<Photo, PhotoDto>();
 
             CreateMap<Unit, UnitDto>();
-            CreateMap<CreateUnirDto,Unit>();
+            CreateMap<CreateUnitDto,Unit>();
 
             CreateMap<CourseUpdateDto, Course>();
 
