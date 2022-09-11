@@ -39,7 +39,6 @@ namespace API.Data.Repositories
 
         public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
-
             if (userParams.CourseId == null)
             {
                 var query = _context.Users.AsQueryable();
@@ -50,7 +49,6 @@ namespace API.Data.Repositories
             else
             {
                 var query = _context.Students.Include(s => s.Courses).AsQueryable();
-
                 query = query.Where(s => s.Courses.Any(c => c.CourseID == userParams.CourseId));
                 return await PageList<MemberDto>.CreateAsync(
                     query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider).AsNoTracking(),
@@ -66,5 +64,4 @@ namespace API.Data.Repositories
             .SingleOrDefaultAsync();
         }
     }
-
 }

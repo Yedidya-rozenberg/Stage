@@ -13,7 +13,6 @@ namespace API.Entities
         public Teacher Teacher { get; set; }
 
         public ICollection<Student> Students { get; set; }
-
         public ICollection<Unit> Units { get; set; }
     }
 }

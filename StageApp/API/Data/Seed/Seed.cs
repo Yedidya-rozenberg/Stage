@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using API.Entities;
 using System;
-using Microsoft.Extensions.Logging;
-
 namespace API.Data
 {
     public class Seed
@@ -21,16 +19,13 @@ namespace API.Data
             await EnterUsersAsync<Teacher>(context, "Data/Seed/TeacherSeedData.json");
             var courses = await EnterCourseUnitsAsync(context);
             await EnterStudentsAsync(context, students, courses);
-
         }
 
         private static async Task<List<Course>> EnterCourseUnitsAsync(DataContext context)
         {
             var random = new Random();
-
             var courses = await AsList<Course>("Data/Seed/CourseSeedData.json");
             var units = await AsList<Unit>("Data/Seed/UnitSeedData.json");
-
 
             foreach (var course in courses)
             {
@@ -69,10 +64,9 @@ namespace API.Data
 
         private static async Task<List<T>> EnterUsersAsync<T>(DataContext context, string path) where T : AppUser
         {
+            var users = await AsList<T>(path);
 
-            var Users = await AsList<T>(path);
-
-            foreach (var user in Users)
+            foreach (var user in users)
             {
                 using var hmac = new HMACSHA512();
                 user.UserName = user.UserName.ToLower();
@@ -82,7 +76,7 @@ namespace API.Data
                 context.Add(user);
             }
             await context.SaveChangesAsync();
-            return Users;
+            return users;
         }
     }
 }

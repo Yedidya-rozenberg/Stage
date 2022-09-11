@@ -32,24 +32,20 @@ namespace API.Data.Repositories
             return await _context.Courses.FindAsync(id);
         }
 
-
         public void Update(Course course)
         {
             _context.Entry<Course>(course).State = EntityState.Modified;
         }
 
-
-        public async Task<PageList<CourseDto>> GetCoursesAsync(CourseParams CourseParams)
+        public async Task<PageList<CourseDto>> GetCoursesAsync(CourseParams courseParams)
         {
-
-            var user = await _context.Users.SingleOrDefaultAsync(c => c.UserName == CourseParams.CurrentUser);
-
+            var user = await _context.Users.SingleOrDefaultAsync(c => c.UserName == courseParams.CurrentUser);
             var query = _context.Courses.AsQueryable();
-            if (user is Student && CourseParams.MyCourses)
+            if (user is Student && courseParams.MyCourses)
             {
                 query = query.Where(c => c.Students.Any(s => s.Id == user.Id));
             }
-            else if (user is Teacher && CourseParams.MyCourses)
+            else if (user is Teacher && courseParams.MyCourses)
             {
                 query = query.Where(c => c.TeacherID == user.Id);
             }
@@ -58,12 +54,11 @@ namespace API.Data.Repositories
                 query = query.Where(c => c.CourseStatus);
             }
 
-
-            if (CourseParams.TeacherName != null)
+            if (courseParams.TeacherName != null)
             {
                 var queryByTeacher = _context.Courses
                  .Include(c => c.Teacher)
-                 .Where(c => c.Teacher.KnownAs.ToLower() == CourseParams.TeacherName.ToLower()).Select(c => c).AsQueryable();
+                 .Where(c => c.Teacher.KnownAs.ToLower() == courseParams.TeacherName.ToLower()).Select(c => c).AsQueryable();
 
                 query = from c in query
                         join ct in queryByTeacher on c.CourseID equals ct.CourseID
@@ -72,10 +67,9 @@ namespace API.Data.Repositories
 
             query = query.OrderBy(c => c.CourseID);
 
-
             return await PageList<CourseDto>.CreateAsync(
                 query.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).AsNoTracking(),
-                CourseParams.PageNumber, CourseParams.PageSize);
+                courseParams.PageNumber, courseParams.PageSize);
         }
 
         public async void DisableCourse(Course course)
@@ -105,19 +99,17 @@ namespace API.Data.Repositories
             var course = await _context.Courses.Include(c => c.Students).Where(c => c.CourseID == courseId).FirstOrDefaultAsync();
             course.Students.Add(student);
         }
-    
+
         public void UnregisterStudentFromCourse(int courseId, Student student)
         {
             var course = _context.Courses.Include(c => c.Students).Where(c => c.CourseID == courseId).FirstOrDefault();
             course.Students.Remove(student);
         }
-      
 
         public Task<bool> CheckStudentCourse(int courseId, int studentId)
         {
             var course = _context.Courses.Include(c => c.Students).Where(c => c.CourseID == courseId).FirstOrDefault();
             return Task.FromResult(course.Students.Any(s => s.Id == studentId));
         }
-     
     }
 }

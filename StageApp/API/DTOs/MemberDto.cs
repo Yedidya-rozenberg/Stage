@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
 
 namespace API.DTOs
 {
     public class MemberDto
     {
-
         public int Id { get; set; }
         public string UserName { get; set; }
         public string PhotoUrl { get; set; }
@@ -17,6 +15,5 @@ namespace API.DTOs
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public bool IsActive { get; set; } = true;
-
     }
 }

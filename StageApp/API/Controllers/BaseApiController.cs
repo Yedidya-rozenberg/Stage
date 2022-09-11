@@ -5,11 +5,11 @@ using API.Helpers;
 namespace API.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
-   [ApiController]
+    [ApiController]
     [Route("api/[controller]")]
 
-    public class BaseApiController: ControllerBase
+    public class BaseApiController : ControllerBase
     {
-        
+
     }
 }

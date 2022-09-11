@@ -1,6 +1,3 @@
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-
 namespace API.helpers
 {
     public class CloudinarySettings
@@ -8,9 +5,5 @@ namespace API.helpers
         public string CloudName { get; set; }
         public string ApiKey { get; set; }
         public string ApiSecret { get; set; }
-        
-        
-        
-        
     }
 }

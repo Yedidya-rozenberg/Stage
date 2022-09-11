@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
-using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 
 namespace API.Controllers
@@ -57,7 +51,6 @@ namespace API.Controllers
             {
                 return Unauthorized("You are not authorized to access this course");
             }
-
         }
 
         [HttpGet("{unitID}", Name = "GetUnit")]
@@ -101,7 +94,7 @@ namespace API.Controllers
             _unitOfWork.UnitRepository.AddUnit(unit);
             if (await _unitOfWork.Complete())
             {
-               var newUnit = await _unitOfWork.UnitRepository.GetUnitByNameAsync(unit.UnitName);
+                var newUnit = await _unitOfWork.UnitRepository.GetUnitByNameAsync(unit.UnitName);
                 return CreatedAtRoute("GetUnit", new { unitID = newUnit.UnitID }, unit);
             }
             return BadRequest("Could not add unit");
@@ -128,7 +121,7 @@ namespace API.Controllers
             _unitOfWork.UnitRepository.RemoveUnit(unitID);
             if (await _unitOfWork.Complete())
             {
-                return Ok( await _unitOfWork.UnitRepository.GetUnitsByCourseIdAsync(new UnitParams { CourseId = unit.CourseID }));
+                return Ok(await _unitOfWork.UnitRepository.GetUnitsByCourseIdAsync(new UnitParams { CourseId = unit.CourseID }));
             }
             return BadRequest("Could not delete unit");
         }
@@ -141,7 +134,6 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             if (course.TeacherID != user.Id)
             {
@@ -159,7 +151,5 @@ namespace API.Controllers
             }
             return BadRequest("Could not update unit");
         }
-
-
     }
 }

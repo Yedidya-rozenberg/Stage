@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using System.Net;
 using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
@@ -16,7 +15,7 @@ namespace API.Controllers
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-       private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
         public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
         {
             _mapper = mapper;
@@ -24,14 +23,14 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpPost("register")] 
+        [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             using var hmac = new HMACSHA512();
 
             if (await UserExists(registerDto.Username)) return BadRequest("Username already exists");
 
-             var user = _mapper.Map<AppUser>(registerDto);
+            var user = _mapper.Map<AppUser>(registerDto);
 
 
             user.PasswordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(registerDto.Password));
@@ -41,8 +40,9 @@ namespace API.Controllers
 
             await _context.SaveChangesAsync();
 
-            
-            return new UserDto {
+
+            return new UserDto
+            {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
                 KnownAs = user.KnownAs
@@ -50,7 +50,7 @@ namespace API.Controllers
             };
         }
 
-        [HttpPost("login")] 
+        [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await this._context.Users.Include(x => x.Photo).SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
@@ -65,7 +65,8 @@ namespace API.Controllers
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("invalid password");
             }
 
-            return new UserDto {
+            return new UserDto
+            {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
                 KnownAs = user.KnownAs,

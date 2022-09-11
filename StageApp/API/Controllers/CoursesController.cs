@@ -79,7 +79,6 @@ namespace API.Controllers
             _unitOfWork.CourseRepository.AddCourse(course);
             if (await _unitOfWork.Complete())
             {
-
                 return CreatedAtRoute("GetCourse", new { courseName = course.CourseName }, _mapper.Map<CourseDto>(course));
             }
             return BadRequest("Could not add course");
@@ -136,7 +135,7 @@ namespace API.Controllers
             if (course.CourseStatus == false) return BadRequest("Course is not active");
             if (await _unitOfWork.CourseRepository.CheckStudentCourse(courseId, student.Id)) return BadRequest("You are already registered to this course");
             _unitOfWork.CourseRepository.RegisterStudentToCourse(courseId, student as Student);
-            if(await _unitOfWork.Complete())
+            if (await _unitOfWork.Complete())
             {
                 return Ok(_mapper.Map<CourseDto>(course));
             }
@@ -160,6 +159,7 @@ namespace API.Controllers
             }
             return BadRequest("Could not unregister student");
         }
+
         [HttpGet("students/{courseId}")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetStudents(int courseId)
         {
@@ -170,6 +170,5 @@ namespace API.Controllers
             var students = await _unitOfWork.CourseRepository.GetStudentsByCourseIdAsync(courseId);
             return Ok(students);
         }
-
     }
 }

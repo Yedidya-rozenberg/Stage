@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
@@ -23,13 +22,12 @@ namespace API.Data.Repositories
 
         public async void AddUnit(CreateUnitDto unit)
         {
-            var course = await _context.Courses.Include(c=>c.Units).Where(c=>c.CourseID== unit.CourseID).FirstOrDefaultAsync();
+            var course = await _context.Courses.Include(c => c.Units).Where(c => c.CourseID == unit.CourseID).FirstOrDefaultAsync();
             course.Units.Add(_mapper.Map<Unit>(unit));
         }
 
         public async Task<UnitDto> GetUnitByIdAsync(int id)
         {
-
             var unit = await _context.Units.FindAsync(id);
             return _mapper.Map<UnitDto>(unit);
         }
@@ -43,7 +41,7 @@ namespace API.Data.Repositories
         public async Task<PageList<UnitDto>> GetUnitsByCourseIdAsync(UnitParams unitParams)
         {
             var units = _context.Units.AsQueryable();
-            units = units.Where(u=>u.CourseID ==unitParams.CourseId).OrderBy(u=>u.UnitID);
+            units = units.Where(u => u.CourseID == unitParams.CourseId).OrderBy(u => u.UnitID);
             return await PageList<UnitDto>.CreateAsync(units.ProjectTo<UnitDto>(_mapper.ConfigurationProvider).AsNoTracking(), unitParams.PageNumber, unitParams.PageSize);
         }
 
@@ -53,11 +51,9 @@ namespace API.Data.Repositories
             _context.Units.Remove(unit);
         }
 
-
         public void Update(Unit unit)
         {
             _context.Entry<Unit>(unit).State = EntityState.Modified;
         }
-
     }
 }

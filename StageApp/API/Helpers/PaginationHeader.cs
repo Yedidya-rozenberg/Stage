@@ -9,7 +9,7 @@ namespace API.Helpers
             this.TotalItems = totalItems;
             this.TotalPages = totalPages;
         }
-                public int CurrentPage { get; }
+        public int CurrentPage { get; }
         public int ItemPerPage { get; }
         public int TotalItems { get; }
         public int TotalPages { get; }

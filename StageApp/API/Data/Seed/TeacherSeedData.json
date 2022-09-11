@@ -1,58 +1,58 @@
 [
-    {
-      "UserName": "Pacheco",
-      "KnownAs": "Pacheco",
-      "PhoneNumber": "(982) 497-2659",
-      "Email": "combsholt@exotechno.com",
-      "DateOfBirth": "1988-07-07",
-      "Created": "2019-04-21",
-      "LastActive": "2020-09-29",
-      "Photo": {
-        "Url": "https://randomuser.me/api/portraits/men/42.jpg"
-      },
-      "IsActive": true,
-      "Salary": 14097.19
+  {
+    "UserName": "Pacheco",
+    "KnownAs": "Pacheco",
+    "PhoneNumber": "(982) 497-2659",
+    "Email": "combsholt@exotechno.com",
+    "DateOfBirth": "1988-07-07",
+    "Created": "2019-04-21",
+    "LastActive": "2020-09-29",
+    "Photo": {
+      "Url": "https://randomuser.me/api/portraits/men/42.jpg"
     },
-    {
-      "UserName": "Wagner",
-      "KnownAs": "Wagner",
-      "PhoneNumber": "(907) 542-2015",
-      "Email": "eatonschmidt@isologia.com",
-      "DateOfBirth": "1950-05-18",
-      "Created": "2021-05-07",
-      "LastActive": "2020-06-25",
-      "Photo": {
-        "Url": "https://randomuser.me/api/portraits/men/25.jpg"
-      },
-      "IsActive": true,
-      "Salary": 12116.11
+    "IsActive": true,
+    "Salary": 14097.19
+  },
+  {
+    "UserName": "Wagner",
+    "KnownAs": "Wagner",
+    "PhoneNumber": "(907) 542-2015",
+    "Email": "eatonschmidt@isologia.com",
+    "DateOfBirth": "1950-05-18",
+    "Created": "2021-05-07",
+    "LastActive": "2020-06-25",
+    "Photo": {
+      "Url": "https://randomuser.me/api/portraits/men/25.jpg"
     },
-    {
-        "UserName": "Miranda",
-        "KnownAs": "Miranda",
-        "PhoneNumber": "(835) 515-2935",
-        "Email": "dawsonwashington@surelogic.com",
-        "DateOfBirth": "1954-08-05",
-        "Created": "2019-12-28",
-        "LastActive": "2021-02-14",
-        "Photo": {
-          "Url": "https://randomuser.me/api/portraits/women/40.jpg"
-        },
-        "IsActive": true,
-        "Salary": 10459.89
-      },
-      {
-        "UserName": "Vera",
-        "KnownAs": "Vera",
-        "PhoneNumber": "(940) 426-2356",
-        "Email": "lolatownsend@pushcart.com",
-        "DateOfBirth": "1963-11-05",
-        "Created": "2020-10-05",
-        "LastActive": "2021-09-22",
-        "Photo": {
-          "Url": "https://randomuser.me/api/portraits/women/37.jpg"
-        },
-        "IsActive": true,
-        "Salary": 14779.43
-      }
-  ]
+    "IsActive": true,
+    "Salary": 12116.11
+  },
+  {
+    "UserName": "Miranda",
+    "KnownAs": "Miranda",
+    "PhoneNumber": "(835) 515-2935",
+    "Email": "dawsonwashington@surelogic.com",
+    "DateOfBirth": "1954-08-05",
+    "Created": "2019-12-28",
+    "LastActive": "2021-02-14",
+    "Photo": {
+      "Url": "https://randomuser.me/api/portraits/women/40.jpg"
+    },
+    "IsActive": true,
+    "Salary": 10459.89
+  },
+  {
+    "UserName": "Vera",
+    "KnownAs": "Vera",
+    "PhoneNumber": "(940) 426-2356",
+    "Email": "lolatownsend@pushcart.com",
+    "DateOfBirth": "1963-11-05",
+    "Created": "2020-10-05",
+    "LastActive": "2021-09-22",
+    "Photo": {
+      "Url": "https://randomuser.me/api/portraits/women/37.jpg"
+    },
+    "IsActive": true,
+    "Salary": 14779.43
+  }
+]

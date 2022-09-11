@@ -4,5 +4,4 @@ namespace API.Helpers
     {
         public int CourseId { get; set; }
     }
-
 }

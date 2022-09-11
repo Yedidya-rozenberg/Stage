@@ -1,9 +1,6 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Data;
 using API.DTOs;
 using API.Entities;
-using API.Extantion;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
@@ -11,7 +8,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -28,13 +24,12 @@ namespace API.Controllers
             _mapper = mapper;
             _photoService = photoService;
         }
+
         [HttpGet]
         public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             userParams.CurrentUser = user.UserName;
-
             var users = await _unitOfWork.UserRepository.GetMembersAsync(userParams);
 
             Response.AddPaginationHeader(
@@ -45,13 +40,10 @@ namespace API.Controllers
             return Ok(users);
         }
 
-
-
         [HttpGet("{username}", Name = "GetUser"),]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             var rtn = await _unitOfWork.UserRepository.GetMemberAsync(username);
-
             return rtn;
         }
 
@@ -64,22 +56,19 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateUser(MemberUpdateDTO memberUpdateDTO)
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDTO)
         {
             var username = User.GetUsername();
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
 
             _mapper.Map(memberUpdateDTO, user);
-
             _unitOfWork.UserRepository.Update(user);
-
 
             if (await _unitOfWork.Complete())
             {
                 return NoContent();
             }
             return BadRequest("Failed to update user");
-
         }
 
         [HttpPost("add-photo")]
@@ -88,7 +77,6 @@ namespace API.Controllers
             var username = User.GetUsername();
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
             var oldPhoto = user.Photo;
-
             var result = await _photoService.UploadPhotoAsync(file);
 
             if (result.Error != null)
@@ -96,8 +84,7 @@ namespace API.Controllers
                 return BadRequest(result.Error.Message);
             }
 
-            
-            if(oldPhoto?.PublicId != null) await _photoService.DeletePhotoAsync(oldPhoto.PublicId);
+            if (oldPhoto?.PublicId != null) await _photoService.DeletePhotoAsync(oldPhoto.PublicId);
 
             var photo = new Photo
             {
@@ -111,7 +98,6 @@ namespace API.Controllers
             {
                 return CreatedAtRoute("GetUser", new { username = user.UserName }, _mapper.Map<PhotoDto>(photo));
             }
-
             return BadRequest("Problem adding photos");
         }
 
@@ -119,13 +105,10 @@ namespace API.Controllers
         public async Task<ActionResult> DeletePhoto()
         {
             var username = User.GetUsername();
-
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(username);
-
             var photo = user.Photo;
 
             if (photo == null) return BadRequest("Photo not found");
-
 
             if (photo.PublicId != null)
             {
@@ -140,6 +123,5 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete photo");
         }
-
     }
 }

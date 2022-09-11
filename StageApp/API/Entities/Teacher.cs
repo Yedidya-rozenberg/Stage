@@ -6,6 +6,5 @@ namespace API.Entities
     {
         public float Salary { get; set; }
         public ICollection<Course> Courses { get; set; }
-
     }
 }

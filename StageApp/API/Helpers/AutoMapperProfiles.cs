@@ -31,12 +31,13 @@ namespace API.Helpers
                 opt => opt.MapFrom(src => src.Teacher.UserName)
             );
 
-            CreateMap<MemberUpdateDTO, AppUser>();
+            CreateMap<MemberUpdateDto, AppUser>();
 
             CreateMap<Photo, PhotoDto>();
 
             CreateMap<Unit, UnitDto>();
-            CreateMap<CreateUnitDto,Unit>();
+
+            CreateMap<CreateUnitDto, Unit>();
 
             CreateMap<CourseUpdateDto, Course>();
 
@@ -49,6 +50,5 @@ namespace API.Helpers
                 opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge())
             );
         }
-
     }
 }
