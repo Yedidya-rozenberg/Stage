@@ -33,8 +33,10 @@ const response = this.courseCache.get(cacheKay);
 if (response){return of (response);}
 
 let params = getPaginationParams(courseParams.pageNumber, courseParams.pageSize);
-params.append('MyCourses', courseParams.MyCourses);
-params.append('TeacherName', courseParams.TeacherName as string);
+params = params.append('MyCourses', courseParams.MyCourses);
+if (courseParams.TeacherName !== undefined){
+  params = params.append('TeacherName', courseParams.TeacherName);
+}
 
 return getPaginatedResult<course[]>(this.baseUrl + 'courses', params, this.http)
 .pipe(tap(response => {this.courseCache.set(cacheKay, response);}));

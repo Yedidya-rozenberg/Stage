@@ -45,9 +45,11 @@
   '{{repeat(10)}}',
   {
     CourseName:'{{lorem( 3, "words")}}',
-    CourseStatus:1,
-    Photo:{ Url:'https://picsum.photos/300/200'},
+    CourseStatus:true,
+    Photo:{ Url:'https://picsum.photos/id/' +  '{{integer( 200,300 )}}' + '/300/200'},
     TeacherID:'{{integer(11,14)}}',
+        "Students": [],
+    "Units": []
   }
 ]
 

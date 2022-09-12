@@ -29,7 +29,7 @@ currentUser$ : Observable<User | null>;
   login(){
     this.accountService.login(this.model)
     .subscribe({next: Response=> {
-      this.router.navigateByUrl('/members');
+      this.router.navigateByUrl('/courses');
       console.log(Response);
      // this.loggedIn = true;
     },

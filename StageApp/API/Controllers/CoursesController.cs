@@ -25,6 +25,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<PageList<CourseDto>>> GetCourses([FromQuery] CourseParams courseParams)
         {

@@ -2,8 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { course } from '../models/cours';
+import { Pagination } from '../models/pagination';
+import { CourseParams } from '../models/params/CourseParams';
 import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
   selector: 'app-home',
@@ -12,22 +16,37 @@ import { AccountService } from '../services/account.service';
 })
 export class HomeComponent implements OnInit {
 
-registerMode = false;
-Users:any;
+  registerMode = false;
+  Users: any;
+  courses: course[] = [];
+  coursrParams: CourseParams = new CourseParams;
+  pagination: Pagination | undefined;
 
-constructor(private http:HttpClient, 
-  private accountService:AccountService, 
-  private router: Router ) { }
+
+  constructor(private http: HttpClient,
+    private accountService: AccountService,
+    private router: Router,
+    private courseService: CoursesService) { }
 
   ngOnInit(): void {
     if (this.accountService.user)
-    this.router.navigateByUrl('/courses');
+      this.router.navigateByUrl('/courses');
+    this.getCourses();
   }
-  registerToggle(){
+  getCourses() {
+    this.coursrParams.pageSize = 6;
+    this.coursrParams.pageNumber = 1;
+    this.courseService.getCourses(this.coursrParams).subscribe(
+      res => {
+        this.courses = res.result as course[];
+        this.pagination = res.pagination;
+      });
+  }
+  registerToggle() {
     this.registerMode = !this.registerMode;
   }
 
-  cancelRegisterMode($event: boolean){
+  cancelRegisterMode($event: boolean) {
     this.registerMode = $event;
   }
 

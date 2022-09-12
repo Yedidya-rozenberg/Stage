@@ -1,6 +1,52 @@
+<div class="text-center mt-3">
+  <h2>{{"What would you like to discover today?"}}</h2>
+</div>
 
+<div class="container mt-3">
+  <div class="row">
+    <form class="form-inline mt-2 mt-md-0" (ngSubmit)="loadCourses()" autocomplete="on">
+      <div class=flex-container>
+        <div>
+          <div class="custom-control custom-radio" name="myCourses">
+            <input type="radio" class="custom-control-input" name="customRadio" btnRadio=true [(ngModel)]="myCourses">
+            <label class="custom-control-label"> My Courses</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" name="customRadio" btnRadio=false [(ngModel)]="myCourses">
+            <label class="custom-control-label"> All courses</label>
+          </div>
+        </div>
+        <div class="form-group">Search by teacher:
+          <input name="teacername" [(ngModel)]="courseParams.TeacherName" class="form-control" type="text"
+            placeholder="Teacher Name">
+        </div>
+        <div class="form-group">Number of results per page:<input name="pageSize" [(ngModel)]="courseParams.pageSize"
+            class="form-control" type="number" placeholder="10">
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
   <div class="row">
     <div class="col-2" *ngFor="let course of courses">
-        <app-course-card [course]="$any(course)"></app-course-card>    
+      <app-course-card [course]="$any(course)"></app-course-card>
     </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+
+  <pagination
+  [boundaryLinks]="true"
+  [totalItems]="pagination.totalItems"
+  [itemsPerPage]="pagination.itemsPerPage"
+  [(ngModel)]="pagination.currentPage"
+  (pageChanged)="pageChanged($event)"
+  previousText="&lsaquo;"
+  nextText="&rsaquo;"
+  firstText="&laquo;"
+  lastText="&raquo;"
+  >
+
+</pagination>
 </div>
