@@ -38,11 +38,11 @@ namespace API.Data.Repositories
             return _mapper.Map<UnitDto>(unit);
         }
 
-        public async Task<PageList<UnitDto>> GetUnitsByCourseIdAsync(UnitParams unitParams)
+        public async Task<PageList<UnitNameDto>> GetUnitsByCourseIdAsync(UnitParams unitParams)
         {
             var units = _context.Units.AsQueryable();
             units = units.Where(u => u.CourseID == unitParams.CourseId).OrderBy(u => u.UnitID);
-            return await PageList<UnitDto>.CreateAsync(units.ProjectTo<UnitDto>(_mapper.ConfigurationProvider).AsNoTracking(), unitParams.PageNumber, unitParams.PageSize);
+            return await PageList<UnitNameDto>.CreateAsync(units.ProjectTo<UnitNameDto>(_mapper.ConfigurationProvider).AsNoTracking(), unitParams.PageNumber, unitParams.PageSize);
         }
 
         public void RemoveUnit(int unitID)

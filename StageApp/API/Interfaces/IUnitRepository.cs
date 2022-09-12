@@ -11,6 +11,6 @@ namespace API.Interfaces
         void Update(Unit unit);
         Task<UnitDto> GetUnitByIdAsync(int id);
         Task<UnitDto> GetUnitByNameAsync(string name);
-        Task<PageList<UnitDto>> GetUnitsByCourseIdAsync(UnitParams unitParams);
+        Task<PageList<UnitNameDto>> GetUnitsByCourseIdAsync(UnitParams unitParams);
     }
 }

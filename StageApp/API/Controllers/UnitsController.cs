@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PageList<UnitDto>>> GetUnits([FromQuery] UnitParams unitParams)
+        public async Task<ActionResult<PageList<UnitNameDto>>> GetUnits([FromQuery] UnitParams unitParams)
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             var course = await _unitOfWork.CourseRepository.GetCourseByIdAsync(unitParams.CourseId);
@@ -101,7 +101,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{unitID}")]
-        public async Task<ActionResult<UnitDto>> DeleteUnit(int unitID)
+        public async Task<ActionResult<PageList<UnitNameDto>>> DeleteUnit(int unitID)
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             var unit = await _unitOfWork.UnitRepository.GetUnitByIdAsync(unitID);
