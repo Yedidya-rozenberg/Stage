@@ -7,35 +7,36 @@ import { TestErrorComponent } from './Errors/test-error/test-error.component';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
 import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CourseComponent } from './course/course.component';
+import { UnitComponent } from './unit/unit.component';
+import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
 
 
 const routes: Routes = [
+  {  path: '', component: HomeComponent,pathMatch: 'full'},     
+
+
   {
     path: '',
-    component: HomeComponent,
-    pathMatch: 'full'
-  },
-  {
-    path:'users',
-    component: MembersComponent
-  },
-  {
-    path: '',
-    canActivate:[AuthGuard],
-    runGuardsAndResolvers:'always',
-    children:[
-      {path:'courses', component: CoursesComponent}
+    canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'always',
+    children: [
+      { path: 'users', component: MembersComponent },
+      { path: 'courses', component: CoursesComponent },
+      { path: 'course', component: CourseComponent },
+      { path: 'unit', component: UnitComponent },
+      { path: 'detiles-edit', component: DetilesEditComponent },
     ]
   },
   {
     path: 'errors', component: TestErrorComponent
   },
-  { path:'not-found', component:NotFoundComponent},
-  { path:'server-error', component:ServerErrorComponent},
+  { path: 'not-found', component: NotFoundComponent },
+  { path: 'server-error', component: ServerErrorComponent },
   {
     path: '**',
     pathMatch: 'full',
-    component: HomeComponent
+    component: NotFoundComponent
   }
 ];
 

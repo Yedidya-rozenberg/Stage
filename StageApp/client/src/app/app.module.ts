@@ -19,6 +19,8 @@ import { UnitComponent } from './unit/unit.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     CourseCardComponent,
     CourseComponent,
     UnitComponent,
+    DetilesEditComponent,
+    FooterComponent,
   ],
   imports: [
     SharedModule,
