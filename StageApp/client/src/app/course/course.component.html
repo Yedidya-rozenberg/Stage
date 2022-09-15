@@ -1,1 +1,49 @@
-<p>course works!</p>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 main-col">
+                <a routerLinkActive="active" routerLink="/courses">
+                    <h4 class="text-left">
+                        <i class="fa fa-arrow-left"></i> Return to courses
+                    </h4>
+                </a>
+            </div>
+            <div class="col-sm-4 side-col">
+                <form action="">
+                    <h4>
+                        <i class="fa fa-search"></i> <input type="search" name="" id="" placeholder="search">
+                    </h4>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="bg-img" style="background-image:url({{course.details?.photoUrl}})">
+            <img [src]="course.details?.photoUrl || './assets/course.png'">
+        </div>
+        <div class="col-sm-12 main-col">
+            <div>
+                <h1 class="text-left">
+                    {{course.details?.courseName}}
+                </h1>
+            </div>
+            <div>
+                <h4 class="text-left">
+                    {{course.details?.courseDescription || "Demo course discraption"}}
+                </h4>
+            </div>
+            <div>
+                <h6 class="text-left">
+                    Teach by {{course.details?.teacherName}}
+                </h6>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card mr-4 col-12" *ngFor="let unit of course.units">
+            <a routerLinkActive="active" routerLink="/unit/{{unit.unitName}}">
+                <strong class="card-text text-center"> {{unit.unitName}} </strong>
+            </a>
+        </div>
+    </div>
+</div>

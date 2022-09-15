@@ -4,6 +4,7 @@ namespace API.DTOs
     {
         public int CourseID { get; set; }
         public string CourseName { get; set; }
+        public string CourseDescription { get; set; }
         public bool CourseStatus { get; set; }
         public string PhotoUrl { get; set; }
         public int TeacherID { get; set; }

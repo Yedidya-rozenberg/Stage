@@ -55,7 +55,6 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.toaster.error("Somthing unexpected want wrong");
             console.log(err);
             break;
-
         }
         throw throwError(() => err);
       })

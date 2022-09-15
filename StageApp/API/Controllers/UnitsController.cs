@@ -12,7 +12,7 @@ namespace API.Controllers
 {
     [Authorize]
 
-    [Route("Course/[controller]")]
+    [Route("api/course/[controller]")]
     public class UnitsController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;

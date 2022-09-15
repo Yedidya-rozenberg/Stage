@@ -56,15 +56,21 @@ namespace API.Controllers
             {
                 return NotFound();
             }
+
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
             if (course.CourseStatus == false)
             {
-                var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
                 if (user.Id != course.TeacherID)
                 {
                     return BadRequest("Course is not active");
                 }
+                return Ok(course);
             }
-            return Ok(course);
+            if (await _unitOfWork.CourseRepository.CheckStudentCourse(course.CourseID, user.Id))
+            {
+                return Ok(course);
+            }
+            return Unauthorized("You are not authorized to access this course");
         }
 
         [HttpPost]

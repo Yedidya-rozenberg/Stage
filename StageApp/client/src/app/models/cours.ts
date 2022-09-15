@@ -1,8 +1,10 @@
 export interface course {
-    id:           number;
-    courseName:     string;
+    courseID: number;
+    courseName: string;
+    courseDescription: string;
     courseStatus: boolean;
-    teacher: string;
+    teacherID: number;
+    teacherName: string;
     photoUrl: string;
 }
 

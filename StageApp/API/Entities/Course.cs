@@ -6,6 +6,7 @@ namespace API.Entities
     {
         public int CourseID { get; set; }
         public string CourseName { get; set; }
+        public string CourseDescription { get; set; }
         public bool CourseStatus { get; set; }
         public Photo Photo { get; set; }
 

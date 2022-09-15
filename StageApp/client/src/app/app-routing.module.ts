@@ -10,6 +10,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { CourseComponent } from './course/course.component';
 import { UnitComponent } from './unit/unit.component';
 import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
+import { AccessableGuard } from './guards/accessable.guard';
 
 
 const routes: Routes = [
@@ -21,12 +22,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     runGuardsAndResolvers: 'always',
     children: [
-      { path: 'users', component: MembersComponent },
       { path: 'courses', component: CoursesComponent },
-      { path: 'course', component: CourseComponent },
-      { path: 'unit', component: UnitComponent },
-      { path: 'detiles-edit', component: DetilesEditComponent },
-    ]
+      {path: '',
+      canActivate: [AccessableGuard],
+      runGuardsAndResolvers: 'always',
+      children: [
+      { path: 'users', component: MembersComponent },
+      { path: 'course/:courseName', component: CourseComponent },
+      { path: 'unit/:unitName', component: UnitComponent },
+      { path: 'member/edit', component: DetilesEditComponent },
+    ]}]
   },
   {
     path: 'errors', component: TestErrorComponent

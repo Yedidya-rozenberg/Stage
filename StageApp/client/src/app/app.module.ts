@@ -21,6 +21,9 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
 import { FooterComponent } from './footer/footer.component';
+import { NotFoundComponent } from './Errors/not-found/not-found.component';
+import { ServerErrorComponent } from './Errors/server-error/server-error.component';
+import { TestErrorComponent } from './Errors/test-error/test-error.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { FooterComponent } from './footer/footer.component';
     UnitComponent,
     DetilesEditComponent,
     FooterComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
+    TestErrorComponent
   ],
   imports: [
     SharedModule,

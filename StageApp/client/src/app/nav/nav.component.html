@@ -7,21 +7,15 @@
     <ul  class="navbar-nav mr-auto">
       <ng-container *ngIf="currentUser$ | async" >
               <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/">My corses</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="/courses">My corses</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/">All curses</a>
+          <!-- <a class="nav-link" routerLinkActive="active" routerLink="/courses">All curses</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link"  routerLinkActive="active" routerLink="/">Messages</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="nav-link"  (click)="logout()">Logout</a>
+        <li class="nav-item"> -->
+          <!-- <a class="nav-link"  (click)="logout()">Logout</a> -->
         </li>
       </ng-container>
-      <!-- <li>
-        <a class="nav-link"  routerLinkActive="active" routerLink="/errors">Errors</a>
-      </li> -->
       </ul>
 
       <div class="dropdown" *ngIf="currentUser$ |async as user" dropdown>

@@ -4,5 +4,6 @@ namespace API.DTOs
     {
         public string CourseName { get; set; }
         public bool CourseStatus { get; set; }
+        public string CourseDescription { get; set; }
     }
 }

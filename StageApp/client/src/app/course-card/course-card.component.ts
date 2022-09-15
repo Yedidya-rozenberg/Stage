@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {  Router } from '@angular/router';
 import { course } from '../models/cours';
+import { CoursesService } from '../services/courses.service';
 
 @Component({
   selector: 'app-course-card',
@@ -8,10 +10,17 @@ import { course } from '../models/cours';
 })
 export class CourseCardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private courseService: CoursesService,
+    private router: Router
+  ) { }
   @Input() course! :course;
 
   ngOnInit(): void {
+  }
+  loadCourse(){
+    this.courseService.getCourse(this.course.courseName);
+    this.router.navigateByUrl("/course/"+ this.course.courseName);
   }
 
 }

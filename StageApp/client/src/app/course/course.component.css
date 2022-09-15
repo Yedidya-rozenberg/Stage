@@ -1,0 +1,36 @@
+.content {
+    padding: 10%;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #ecf0f1;
+
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.bg-img {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: aqua;
+}
+img {
+    bottom: 0;
+    width: auto;
+    height: 140px;
+    margin: 30px;
+    position: absolute;
+    border: 4px solid #FFF;
+}
+.card{
+margin-top: 20px;
+padding: 20px;
+}
+
