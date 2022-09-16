@@ -1,1 +1,32 @@
-<p>unit works!</p>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 main-col">
+                <a routerLinkActive="active" routerLink="/courses">
+                    <h4 class="text-left">
+                        <i class="fa fa-arrow-left"></i> Return to course {{course.details?.courseName}}
+                    </h4>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="col-8">
+            <h1>
+                {{course.details?.courseName}}
+            </h1>
+            <h2>
+                Unit: {{unit.unitName}}
+            </h2>
+            <h4>
+                {{course.details?.teacherName}}
+            </h4>
+        </div>
+        <div class="col-4"><img src="{{course.details?.photoUrl}}" alt=""></div>
+    </div>
+    <div class="col-12">
+        <p>{{unit.studyContent}}</p>
+        <h3>Questions:</h3>
+        <p>{{unit.questions}}</p>
+    </div>
+</div>

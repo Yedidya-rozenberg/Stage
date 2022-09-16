@@ -4,3 +4,15 @@
 .row {
   margin: 2rem;
 }
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
+.col-2 {
+flex-grow: inherit;
+margin: 7%;
+}
+

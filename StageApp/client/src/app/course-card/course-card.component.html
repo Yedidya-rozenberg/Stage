@@ -1,13 +1,13 @@
-<div class="card mr-4">
-  <button (click)="loadCourse()">
+<button (click)="loadCourse()">
+  <div class="card mr-4">
     <div class="card-img-wrapper">
       <img class="card-img-top" [src]="course.photoUrl || './assets/course.png'" alt="Unable to load image"
         height="100">
     </div>
-  <div class="card-body p-1">
-    <strong class="card-text text-center"> {{course.courseName}} </strong>
-    <p>{{course.courseDescription}}</p>
-    <small class="card-text text-center">Teacher: {{course.teacherName}} </small>
+    <div class="card-body p-1">
+      <strong class="card-text text-center"> {{course.courseName}} </strong>
+      <p>{{course.courseDescription}}</p>
+      <small class="card-text text-center">Teacher: {{course.teacherName}} </small>
+    </div>
   </div>
 </button>
-</div>

@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     this.getCourses();
   }
   getCourses() {
-    this.coursrParams.pageSize = 6;
+    this.coursrParams.pageSize = 3;
     this.coursrParams.pageNumber = 1;
     this.courseService.getCourses(this.coursrParams).subscribe(
       res => {

@@ -8,13 +8,6 @@
                     </h4>
                 </a>
             </div>
-            <div class="col-sm-4 side-col">
-                <form action="">
-                    <h4>
-                        <i class="fa fa-search"></i> <input type="search" name="" id="" placeholder="search">
-                    </h4>
-                </form>
-            </div>
         </div>
     </div>
     <div class="panel">
@@ -41,7 +34,7 @@
     </div>
     <div class="row">
         <div class="card mr-4 col-12" *ngFor="let unit of course.units">
-            <a routerLinkActive="active" routerLink="/unit/{{unit.unitName}}">
+            <a routerLinkActive="active" routerLink="/unit/{{unit.unitID}}">
                 <strong class="card-text text-center"> {{unit.unitName}} </strong>
             </a>
         </div>

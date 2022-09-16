@@ -3,5 +3,5 @@ export interface unit {
     courseID: number;
     unitName: string;
     studyContent: string;
-    Questions: string;
+    questions: string;
 }

@@ -28,8 +28,8 @@ const routes: Routes = [
       runGuardsAndResolvers: 'always',
       children: [
       { path: 'users', component: MembersComponent },
-      { path: 'course/:courseName', component: CourseComponent },
-      { path: 'unit/:unitName', component: UnitComponent },
+      { path: 'course/', component: CourseComponent },
+      { path: 'unit/:unitId', component: UnitComponent },
       { path: 'member/edit', component: DetilesEditComponent },
     ]}]
   },
