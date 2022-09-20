@@ -4,19 +4,12 @@
     <h3>Stage</h3>
     <p>A world of knowledge sharing</p>  
     </a>
-    <ul  class="navbar-nav mr-auto">
       <ng-container *ngIf="currentUser$ | async" >
-              <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/courses">My corses</a>
-        </li>
-        <li class="nav-item">
-          <!-- <a class="nav-link" routerLinkActive="active" routerLink="/courses">All curses</a>
-        </li>
-        <li class="nav-item"> -->
-          <!-- <a class="nav-link"  (click)="logout()">Logout</a> -->
-        </li>
+        <div class="navbar-nav mr-auto">
+          <a class="nav-link" routerLinkActive="active" routerLink="/courses">My courses</a>
+        </div>
       </ng-container>
-      </ul>
+
 
       <div class="dropdown" *ngIf="currentUser$ |async as user" dropdown>
         <img class="img" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}" srcset="">

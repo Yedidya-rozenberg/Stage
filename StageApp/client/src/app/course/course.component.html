@@ -1,42 +1,64 @@
-<div class="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 main-col">
-                <a routerLinkActive="active" routerLink="/courses">
+<div class="wrapper">
+    <ng-container *ngIf="TeacherMode">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Teacer Sidebar</h3>
+                <h6>The course {{course.details?.courseStatus?"Active":"Deactive"}} </h6>
+            </div>
+            <ul>
+                <li class="nav-item"><a (click)="switchStatus()">{{course.details?.courseStatus?"Deactivate":"Activate"}} this course</a>
+                </li>
+                <li class="nav-item has-submenu">
+                    <a class="nav-link" href="#">Update details</a>
+                
+                </li>
+                <li><a>Add unit</a></li>
+                <li><a (click)="editMode = true">Edit unit</a></li>
+                <li><a class="">Remove unit</a>
+                <li><a href="">Students details</a></li>
+            </ul>
+        </nav>
+    </ng-container>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 main-col">
+                    <a routerLinkActive="active" routerLink="/courses">
+                        <h4 class="text-left">
+                            <i class="fa fa-arrow-left"></i> Return to courses
+                        </h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="bg-img" style="background-image:url({{course.details?.photoUrl}})">
+                <img [src]="course.details?.photoUrl || './assets/course.png'">
+            </div>
+            <div class="col-sm-12 main-col">
+                <div>
+                    <h1 class="text-left">
+                        {{course.details?.courseName}}
+                    </h1>
+                </div>
+                <div>
                     <h4 class="text-left">
-                        <i class="fa fa-arrow-left"></i> Return to courses
+                        {{course.details?.courseDescription || "Demo course discraption"}}
                     </h4>
+                </div>
+                <div>
+                    <h6 class="text-left">
+                        Teach by {{course.details?.teacherName}}
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card mr-4 col-12" *ngFor="let unit of course.units">
+                <a routerLinkActive="active" routerLink="'/unit/{{unit.unitID}}',editMode:{{this.editMode}}">
+                    <strong class="card-text text-center"> {{unit.unitName}} </strong>
                 </a>
             </div>
-        </div>
-    </div>
-    <div class="panel">
-        <div class="bg-img" style="background-image:url({{course.details?.photoUrl}})">
-            <img [src]="course.details?.photoUrl || './assets/course.png'">
-        </div>
-        <div class="col-sm-12 main-col">
-            <div>
-                <h1 class="text-left">
-                    {{course.details?.courseName}}
-                </h1>
-            </div>
-            <div>
-                <h4 class="text-left">
-                    {{course.details?.courseDescription || "Demo course discraption"}}
-                </h4>
-            </div>
-            <div>
-                <h6 class="text-left">
-                    Teach by {{course.details?.teacherName}}
-                </h6>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="card mr-4 col-12" *ngFor="let unit of course.units">
-            <a routerLinkActive="active" routerLink="/unit/{{unit.unitID}}">
-                <strong class="card-text text-center"> {{unit.unitName}} </strong>
-            </a>
         </div>
     </div>
 </div>

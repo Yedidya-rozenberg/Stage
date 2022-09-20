@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { course } from '../models/cours';
+import { courseUpdate } from '../models/courseUpdate';
 import { PaginatedResult } from '../models/pagination';
 import { CourseParams } from '../models/params/CourseParams';
 import { User } from '../models/user';
@@ -87,9 +88,19 @@ export class CoursesService {
           fullCourse.units = units.result;
         }
       });
+    this.courentCourseSource$.next(fullCourse);
+  }
 
-          this.courentCourseSource$.next(fullCourse);
-
+  updateCourse(id: number, params: courseUpdate): Observable<course> {
+    const fullCourse: courseUnits = this.courentCourseSource$.value as courseUnits;
+    return this.http.put<course>(this.baseUrl + 'courses/' + id, params).pipe
+      (tap((course) => {
+        this.myCourseCache.clear();
+        const photoUrl = fullCourse.details!.photoUrl;
+        fullCourse.details = course;
+        fullCourse.details!.photoUrl = photoUrl;
+        this.courentCourseSource$.next(fullCourse);
+      }));
   }
 
   addCourse(): void {
