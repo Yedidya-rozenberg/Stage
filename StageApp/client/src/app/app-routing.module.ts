@@ -11,6 +11,7 @@ import { CourseComponent } from './course/course.component';
 import { UnitComponent } from './unit/unit.component';
 import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
 import { AccessableGuard } from './guards/accessable.guard';
+import { UnitResolver } from './resolvers/unit.resolver';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
       children: [
       { path: 'users', component: MembersComponent },
       { path: 'course', component: CourseComponent },
-      { path: 'unit/:unitId', component: UnitComponent },
+      { path: 'unit/:unitId', component: UnitComponent,
+      resolve: { unit:UnitResolver }},
       { path: 'member/edit', component: DetilesEditComponent },
     ]}]
   },

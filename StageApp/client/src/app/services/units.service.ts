@@ -14,6 +14,7 @@ import { getPaginatedResult, getPaginationParams } from './paginationHelper';
 export class UnitsService {
 
 
+
   baseUrl = environment.apiUrl;
   unitsCache = new Map<string, PaginatedResult<unitName[]>>();
   fullUnitCache: unit[] = [];
@@ -50,6 +51,10 @@ export class UnitsService {
 
   updateUnit(unit: unit): Observable<unit> {
     return this.http.post<unit>(this.baseUrl + 'course/Units/' + unit.unitID.toString(), unit);
+  }
+
+  addUnit(courseID: number) {
+    throw new Error('Method not implemented.');
   }
 
 }

@@ -24,10 +24,10 @@
                     </form>
                 
                 </li>
-                <li><a>Add unit</a></li>
+                <li><a (click)="addUnit()">Add unit</a></li>
                 <li><a (click)="toggleEditMode()">Edit unit</a></li>
-                <li><a class="">Remove unit</a>
-                <li><a href="">Students details</a></li>
+                <li><a (click)="toggleRemoveMode()">Remove unit</a>
+                <li><a [routerLink]="['/users']" routerLinkActive="router-link-active" >Students details</a></li>
             </ul>
         </nav>
     </ng-container>
@@ -66,6 +66,7 @@
             </div>
         </div>
         <strong *ngIf="editMode">Choose unit to edit</strong>
+        <strong *ngIf="removeMode">Choose unit to remove</strong>
         <div class="row">
             <div class="card mr-4 col-12" *ngFor="let unit of course.units">
                 <a routerLinkActive="active" routerLink="/unit/{{unit.unitID}}">

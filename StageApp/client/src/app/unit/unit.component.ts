@@ -38,11 +38,9 @@ export class UnitComponent implements OnInit {
   }
 
   loudUnit() {
-    const routeParams = this.route.snapshot.paramMap;
-    const unitId = routeParams.get('unitId') as string;
-    this.unitService.getUnit(unitId).subscribe(unit => {
-      this.unit = unit;
-      this.questionsList = unit.questions.split(".");
+    this.route.data.subscribe(data => {
+      this.unit = data['unit'];
+      this.questionsList = this.unit.questions.split(".");
     });
     this.isTeacher();
     this.editMode = this.unitService.editMode;

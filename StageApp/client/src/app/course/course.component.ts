@@ -19,6 +19,7 @@ export class CourseComponent implements OnInit {
   course!: courseUnits;
   TeacherMode: boolean = false;
   editMode: boolean = false;
+  removeMode: boolean = false;
   updateForm!: courseUpdate;
   @ViewChild('Form') form!: NgForm;
 
@@ -69,7 +70,21 @@ export class CourseComponent implements OnInit {
   toggleEditMode() {
     this.editMode = !this.editMode;
     this.unitsService.editMode = this.editMode;
+    this.removeMode = this.editMode? false : this.removeMode;
+  }
+  toggleRemoveMode() {
+    this.removeMode = !this.removeMode;
+    this.editMode = this.removeMode? false : this.editMode;
+    this.unitsService.editMode = this.editMode;
   }
 
-
+  addUnit() {
+    this.unitsService.addUnit(this.course.details?.courseID as number)
+    // .subscribe(
+    //   () => {
+    //     this.toastr.success("Unit successfully added");
+    //   })
+    ;
+    this.loadCourse();
+  }
 }
