@@ -8,8 +8,20 @@
             <ul>
                 <li class="nav-item"><a (click)="switchStatus()">{{course.details?.courseStatus?"Deactivate":"Activate"}} this course</a>
                 </li>
-                <li class="nav-item has-submenu">
-                    <a class="nav-link" href="#">Update details</a>
+                <li class="nav-item"><h6>Update details</h6>
+                    <form (ngSubmit)="update()" #Form="ngForm">
+                        <div class="form-group nav-link">
+                            <label for="courseName">Course name</label>
+                            <input type="text" class="form-control" id="courseName" name="courseName" [(ngModel)]="updateForm.courseName" #courseName="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                        </div>
+                        <div class="form-group nav-link">
+                            <label for="courseDescription">Course description</label>
+                            <textarea class="form-control" id="courseDescription" name="courseDescription" [(ngModel)]="updateForm.courseDescription" #courseDescription="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                                {{course.details?.courseDescription}}
+                            </textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
                 
                 </li>
                 <li><a>Add unit</a></li>
