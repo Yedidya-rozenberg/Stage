@@ -8,28 +8,30 @@ import { CoursesService } from '../services/courses.service';
 import { course } from '../models/cours';
 import { NgForm, NgModel } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { UnitsService } from '../services/units.service';
 
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css']
 })
-export class CourseComponent implements OnInit  {
+export class CourseComponent implements OnInit {
   course!: courseUnits;
   TeacherMode: boolean = false;
   editMode: boolean = false;
   updateForm!: courseUpdate;
-@ViewChild('Form') form!: NgForm;
+  @ViewChild('Form') form!: NgForm;
 
 
 
-  
+
 
   constructor(private route: ActivatedRoute,
     private coursesService: CoursesService,
+    private unitsService: UnitsService,
     private accountService: AccountService,
     private toastr: ToastrService
-    ) { }
+  ) { }
 
 
   ngOnInit(): void {
@@ -39,11 +41,10 @@ export class CourseComponent implements OnInit  {
   loadCourse() {
     this.coursesService.courentCourse$.pipe(take(1)).subscribe(
       course => { this.course = course as courseUnits })
-      this.updateForm = { courseStatus: this.course.details!.courseStatus, courseDescription: this.course.details!.courseDescription, courseName: this.course.details!.courseName };
+    this.updateForm = { courseStatus: this.course.details!.courseStatus, courseDescription: this.course.details!.courseDescription, courseName: this.course.details!.courseName };
   }
   isTeacher() {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(
-      user => { this.TeacherMode = (user?.username == this.course?.details?.teacherName) })
+    this.TeacherMode = this.coursesService.TeacherMode;
   }
 
   switchStatus() {
@@ -51,12 +52,12 @@ export class CourseComponent implements OnInit  {
     this.coursesService.updateCourse(this.course.details?.courseID as number, this.updateForm).subscribe(
       () => {
         this.toastr.success("Course status updated");
-       }
+      }
     );
     this.loadCourse();
   }
 
-  update(){
+  update() {
     this.coursesService.updateCourse(this.course.details?.courseID as number, this.updateForm).subscribe(
       () => {
         this.toastr.success("Course successfully updated");
@@ -65,7 +66,10 @@ export class CourseComponent implements OnInit  {
     this.loadCourse();
     this.form.reset();
   }
-
+  toggleEditMode() {
+    this.editMode = !this.editMode;
+    this.unitsService.editMode = this.editMode;
+  }
 
 
 }

@@ -2,31 +2,61 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8 main-col">
-                <a routerLinkActive="active" routerLink="/courses">
+                <a routerLinkActive="active" routerLink="/course">
                     <h4 class="text-left">
                         <i class="fa fa-arrow-left"></i> Return to course {{course.details?.courseName}}
                     </h4>
                 </a>
             </div>
+            <ng-container *ngIf="TeacherMode">
+                <button class="col-sm-4 main-col" (click)="EditToggle()">Edit mode {{editMode?"on":"off"}} </button>
+            </ng-container>
         </div>
     </div>
     <div class="nav">
         <div class="col-8">
             <h1>
-                {{course.details?.courseName}}
+                {{course.details?.courseName}} course
             </h1>
             <h2>
                 Unit: {{unit.unitName}}
             </h2>
             <h4>
-                {{course.details?.teacherName}}
+                Teacer: {{course.details?.teacherName}}
             </h4>
         </div>
         <div class="col-4"><img src="{{course.details?.photoUrl}}" alt=""></div>
     </div>
-    <div class="col-12">
+    <div *ngIf="!editMode" class="col-12">
         <p>{{unit.studyContent}}</p>
         <h3>Questions:</h3>
-        <p>{{unit.questions}}</p>
+        <div *ngFor="let question of questionsList">
+            <div *ngIf="question">
+                <strong>{{question}}?</strong>
+            </div>
+        </div>
     </div>
-</div>
+    <div *ngIf="editMode" class="col-12">
+        <form (ngSubmit)="update()" #updateForm="ngForm">
+            <div class="form-group">
+                <label for="unitName">Unit name</label>
+                <input type="text" class="form-control" id="unitName" name="unitName" [(ngModel)]="unit.unitName"
+                    #unitName="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+            </div>
+            <div class="form-group">
+                <label for="studyContent">Study content</label>
+                <textarea class="form-control" id="studyContent" name="studyContent" [(ngModel)]="unit.studyContent"
+                    #studyContent="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                    {{unit.studyContent}}
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label for="questions">Questions</label>
+                <textarea class="form-control" id="questions" name="questions" [(ngModel)]="unit.questions"
+                    #questions="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                    {{unit.questions}}
+                </textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>

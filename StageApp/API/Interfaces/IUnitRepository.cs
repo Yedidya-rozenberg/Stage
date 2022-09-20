@@ -9,7 +9,7 @@ namespace API.Interfaces
         void AddUnit(CreateUnitDto unit);
         void RemoveUnit(int unitID);
         void Update(Unit unit);
-        Task<UnitDto> GetUnitByIdAsync(int id);
+        Task<Unit> GetUnitByIdAsync(int id);
         Task<UnitDto> GetUnitByNameAsync(string name);
         Task<PageList<UnitNameDto>> GetUnitsByCourseIdAsync(UnitParams unitParams);
     }

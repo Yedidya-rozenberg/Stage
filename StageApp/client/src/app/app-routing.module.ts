@@ -28,7 +28,7 @@ const routes: Routes = [
       runGuardsAndResolvers: 'always',
       children: [
       { path: 'users', component: MembersComponent },
-      { path: 'course/', component: CourseComponent },
+      { path: 'course', component: CourseComponent },
       { path: 'unit/:unitId', component: UnitComponent },
       { path: 'member/edit', component: DetilesEditComponent },
     ]}]

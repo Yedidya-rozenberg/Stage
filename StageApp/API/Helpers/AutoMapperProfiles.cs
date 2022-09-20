@@ -37,6 +37,8 @@ namespace API.Helpers
 
             CreateMap<Unit, UnitDto>();
 
+            CreateMap<UnitDto, Unit>();
+
             CreateMap<Unit, UnitNameDto>();
 
             CreateMap<CreateUnitDto, Unit>();

@@ -31,6 +31,8 @@ export class CoursesService {
   unitParams: unitParams = new unitParams;
   private courentCourseSource$ = new BehaviorSubject<courseUnits | null>(null);
   courentCourse$ = this.courentCourseSource$.asObservable();
+  TeacherMode: boolean = false;
+
 
 
 
@@ -89,6 +91,7 @@ export class CoursesService {
         }
       });
     this.courentCourseSource$.next(fullCourse);
+    this.isTeacher();
   }
 
   updateCourse(id: number, params: courseUpdate): Observable<course> {
@@ -101,6 +104,11 @@ export class CoursesService {
         fullCourse.details!.photoUrl = photoUrl;
         this.courentCourseSource$.next(fullCourse);
       }));
+  }
+  isTeacher() {
+    const fullCourse: courseUnits = this.courentCourseSource$.value as courseUnits;
+    this.accountService.currentUser$.pipe(take(1)).subscribe(
+      user => { this.TeacherMode = (user?.username == fullCourse.details?.teacherName) } );
   }
 
   addCourse(): void {

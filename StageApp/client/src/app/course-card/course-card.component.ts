@@ -20,7 +20,7 @@ export class CourseCardComponent implements OnInit {
   }
   loadCourse(){
     this.courseService.getCourse(this.course.courseName);
-    this.router.navigateByUrl("/course/");
+    this.router.navigateByUrl("/course");
   }
 
 }

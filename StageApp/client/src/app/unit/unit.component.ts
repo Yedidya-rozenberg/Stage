@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { course } from '../models/cours';
 import { courseUnits } from '../models/courseUnits';
 import { unit } from '../models/unit';
@@ -13,11 +14,18 @@ import { UnitsService } from '../services/units.service';
 })
 export class UnitComponent implements OnInit {
   unit!: unit;
-  course!:courseUnits;
+  course!: courseUnits;
+  editMode: boolean = false;
+  questionsList: string[] = [];
+  TeacherMode: boolean = false;
+
+
 
   constructor(private route: ActivatedRoute,
     private unitService: UnitsService,
-    private courseService:CoursesService) { }
+    private coursesService: CoursesService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.loudCourse();
@@ -26,7 +34,7 @@ export class UnitComponent implements OnInit {
 
 
   loudCourse() {
-this.courseService.courentCourse$.subscribe(course=>this.course=course as courseUnits);
+    this.coursesService.courentCourse$.subscribe(course => this.course = course as courseUnits);
   }
 
   loudUnit() {
@@ -34,6 +42,30 @@ this.courseService.courentCourse$.subscribe(course=>this.course=course as course
     const unitId = routeParams.get('unitId') as string;
     this.unitService.getUnit(unitId).subscribe(unit => {
       this.unit = unit;
+      this.questionsList = unit.questions.split(".");
     });
+    this.isTeacher();
+    this.editMode = this.unitService.editMode;
   }
+
+  EditToggle() {
+    this.editMode = !this.editMode;
+    this.unitService.editMode = this.editMode;
   }
+
+  isTeacher() {
+    this.TeacherMode = this.coursesService.TeacherMode;
+  }
+
+  update() {
+    this.unitService.updateUnit(this.unit).subscribe(
+      (unit:unit) => {
+        this.unit = unit;
+        this.toastr.success("Unit updated");
+        this.questionsList = unit.questions.split(".");
+      }
+    );
+    this.EditToggle();
+  }
+
+}

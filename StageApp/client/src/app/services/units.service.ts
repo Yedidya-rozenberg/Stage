@@ -18,6 +18,7 @@ export class UnitsService {
   unitsCache = new Map<string, PaginatedResult<unitName[]>>();
   fullUnitCache: unit[] = [];
   unitParams: unitParams = new unitParams;
+  editMode: boolean = false;
 
 
   constructor(private http: HttpClient) { }
@@ -46,5 +47,10 @@ export class UnitsService {
       )
     );
   }
+
+  updateUnit(unit: unit): Observable<unit> {
+    return this.http.post<unit>(this.baseUrl + 'course/Units/' + unit.unitID.toString(), unit);
+  }
+
 }
 

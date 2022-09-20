@@ -26,10 +26,10 @@ namespace API.Data.Repositories
             course.Units.Add(_mapper.Map<Unit>(unit));
         }
 
-        public async Task<UnitDto> GetUnitByIdAsync(int id)
+        public async Task<Unit> GetUnitByIdAsync(int id)
         {
             var unit = await _context.Units.FindAsync(id);
-            return _mapper.Map<UnitDto>(unit);
+            return (unit);
         }
 
         public async Task<UnitDto> GetUnitByNameAsync(string name)

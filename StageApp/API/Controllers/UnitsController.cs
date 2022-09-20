@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
@@ -73,7 +74,7 @@ namespace API.Controllers
             }
             if (course.TeacherID == user.Id || await _unitOfWork.CourseRepository.CheckStudentCourse(unit.CourseID, user.Id))
             {
-                return Ok(unit);
+                return Ok(_mapper.Map<UnitDto>(unit));
             }
             return Unauthorized("You are not authorized to access this course");
         }
@@ -144,10 +145,11 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            _mapper.Map(unit, unitFromRepo);
+            _mapper.Map(unit,unitFromRepo);
+            this._unitOfWork.UnitRepository.Update(unitFromRepo);
             if (await _unitOfWork.Complete())
             {
-                return Ok(unit);
+                return Ok(await _unitOfWork.UnitRepository.GetUnitByNameAsync(unit.UnitName));
             }
             return BadRequest("Could not update unit");
         }
