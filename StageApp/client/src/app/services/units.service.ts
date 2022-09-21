@@ -59,8 +59,12 @@ export class UnitsService {
     } ));
   }
 
-  addUnit(courseID: number) {
-    throw new Error('Method not implemented.');
+  addUnit(unit: Partial<unit>): Observable<unit> {
+    return this.http.put<unit>(this.baseUrl + 'course/Units/' , unit)
+    .pipe(map((unit: unit) => {
+      this.unitsCache.clear();
+      return (unit);
+    } ));
   }
 
    removeUnit(unitId: number) {

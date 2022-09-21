@@ -8,7 +8,7 @@
                     </h4>
                 </a>
             </div>
-            <ng-container *ngIf="TeacherMode">
+            <ng-container *ngIf="TeacherMode&&!newUnit">
                 <button class="col-sm-4 main-col" (click)="EditToggle()">Edit mode {{editMode?"on":"off"}} </button>
             </ng-container>
         </div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div *ngIf="editMode" class="col-12">
-        <form (ngSubmit)="update()" #updateForm="ngForm">
+        <form (ngSubmit)="newUnit?addUnit():update()" #updateForm="ngForm">
             <div class="form-group">
                 <label for="unitName">Unit name</label>
                 <input type="text" class="form-control" id="unitName" name="unitName" [(ngModel)]="unit.unitName"
@@ -57,6 +57,6 @@
                     {{unit.questions}}
                 </textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">{{newUnit?"Create":"Update"}}</button>
         </form>
     </div>

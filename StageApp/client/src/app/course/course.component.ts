@@ -80,16 +80,6 @@ export class CourseComponent implements OnInit, OnDestroy {
     this.unitsService.editMode = this.editMode;
   }
 
-  addUnit() {
-    this.unitsService.addUnit(this.course.details?.courseID as number)
-      // .subscribe(
-      //   () => {
-      //     this.toastr.success("Unit successfully added");
-      //   })
-      ;
-    this.loadCourse();
-  }
-
   removeUnit(unitID: number) {
     this.view = false;
     this.unitsService.removeUnit(unitID)

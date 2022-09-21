@@ -31,7 +31,7 @@
                     </form>
 
                 </li>
-                <li><a (click)="addUnit()">Add unit</a></li>
+                <li><a [routerLink]="['/unit/new']" routerLinkActive="router-link-active" >Add unit</a></li>
                 <li><a (click)="toggleEditMode()">Edit unit</a></li>
                 <li><a (click)="toggleRemoveMode()">Remove unit</a>
                 <li><a [routerLink]="['/users']" routerLinkActive="router-link-active">Students details</a></li>
