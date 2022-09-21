@@ -60,7 +60,7 @@ img {
 
 .card {
     margin-top: 20px;
-    padding: 20px;
+    padding: 16px;
 }
 
 a, a:hover, a:focus {
@@ -98,5 +98,11 @@ li {
     list-style: none;
 }
 ul{
+    padding: 0;
+}
+.card-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 0;
 }

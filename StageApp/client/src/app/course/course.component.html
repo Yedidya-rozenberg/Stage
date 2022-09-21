@@ -6,28 +6,35 @@
                 <h6>The course {{course.details?.courseStatus?"Active":"Deactive"}} </h6>
             </div>
             <ul>
-                <li class="nav-item"><a (click)="switchStatus()">{{course.details?.courseStatus?"Deactivate":"Activate"}} this course</a>
+                <li class="nav-item"><a
+                        (click)="switchStatus()">{{course.details?.courseStatus?"Deactivate":"Activate"}} this
+                        course</a>
                 </li>
-                <li class="nav-item"><h6>Update details</h6>
+                <li class="nav-item">
+                    <h6>Update details</h6>
                     <form (ngSubmit)="update()" #Form="ngForm">
                         <div class="form-group nav-link">
                             <label for="courseName">Course name</label>
-                            <input type="text" class="form-control" id="courseName" name="courseName" [(ngModel)]="updateForm.courseName" #courseName="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                            <input type="text" class="form-control" id="courseName" name="courseName"
+                                [(ngModel)]="updateForm.courseName" #courseName="ngModel"
+                                [ngModelOptions]="{updateOn: 'submit'}">
                         </div>
                         <div class="form-group nav-link">
                             <label for="courseDescription">Course description</label>
-                            <textarea class="form-control" id="courseDescription" name="courseDescription" [(ngModel)]="updateForm.courseDescription" #courseDescription="ngModel" [ngModelOptions]="{updateOn: 'submit'}">
+                            <textarea class="form-control" id="courseDescription" name="courseDescription"
+                                [(ngModel)]="updateForm.courseDescription" #courseDescription="ngModel"
+                                [ngModelOptions]="{updateOn: 'submit'}">
                                 {{course.details?.courseDescription}}
                             </textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
-                
+
                 </li>
                 <li><a (click)="addUnit()">Add unit</a></li>
                 <li><a (click)="toggleEditMode()">Edit unit</a></li>
                 <li><a (click)="toggleRemoveMode()">Remove unit</a>
-                <li><a [routerLink]="['/users']" routerLinkActive="router-link-active" >Students details</a></li>
+                <li><a [routerLink]="['/users']" routerLinkActive="router-link-active">Students details</a></li>
             </ul>
         </nav>
     </ng-container>
@@ -69,9 +76,17 @@
         <strong *ngIf="removeMode">Choose unit to remove</strong>
         <div class="row">
             <div class="card mr-4 col-12" *ngFor="let unit of course.units">
-                <a routerLinkActive="active" routerLink="/unit/{{unit.unitID}}">
-                    <strong class="card-text text-center"> {{unit.unitName}} </strong>
-                </a>
+                <ng-container *ngIf="!removeMode; else remove">
+                    <a routerLinkActive="active" routerLink="/unit/{{unit.unitID}}">
+                        <strong class="card-text text-center"> {{unit.unitName}} </strong>
+                    </a>
+                </ng-container>
+                <ng-template #remove>
+                    <div class="card-body">
+                        <strong class="card-text text-center"> {{unit.unitName}} </strong>
+                        <button class="btn btn-danger" (click)="removeUnit(unit.unitID)">Remove</button>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>

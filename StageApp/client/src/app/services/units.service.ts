@@ -5,8 +5,9 @@ import { unitParams } from '../models/params/unitParams';
 import { environment } from 'src/environments/environment';
 import { PaginatedResult } from '../models/pagination';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Observer, of, tap } from 'rxjs';
+import { map, Observable, Observer, of, pipe, tap } from 'rxjs';
 import { getPaginatedResult, getPaginationParams } from './paginationHelper';
+import { CoursesService } from './courses.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class UnitsService {
 
   baseUrl = environment.apiUrl;
   unitsCache = new Map<string, PaginatedResult<unitName[]>>();
-  fullUnitCache: unit[] = [];
+  fullUnitCache:  unit[] = [];
   unitParams: unitParams = new unitParams;
   editMode: boolean = false;
 
@@ -50,12 +51,25 @@ export class UnitsService {
   }
 
   updateUnit(unit: unit): Observable<unit> {
-    return this.http.post<unit>(this.baseUrl + 'course/Units/' + unit.unitID.toString(), unit);
+    return this.http.post<unit>(this.baseUrl + 'course/Units/' + unit.unitID.toString(), unit)
+    .pipe(map((unit: unit) => {
+      this.unitsCache.clear();
+      this.fullUnitCache[this.fullUnitCache.findIndex(x => x.unitID == unit.unitID)] = unit;
+      return (unit);
+    } ));
   }
 
   addUnit(courseID: number) {
     throw new Error('Method not implemented.');
   }
 
+   removeUnit(unitId: number) {
+   return  this.http.delete<PaginatedResult<unitName[]>>(this.baseUrl + 'course/Units/' + unitId.toString())
+     .pipe(tap(() => {
+        this.unitsCache.clear();
+        delete this.fullUnitCache[this.fullUnitCache.findIndex(x => x.unitID === unitId)];
+      }));
+  }
 }
+
 

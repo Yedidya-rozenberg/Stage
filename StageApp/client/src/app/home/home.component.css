@@ -13,6 +13,6 @@
 }
 .col-2 {
 flex-grow: inherit;
-margin: 7%;
+margin-inline: 7%;
 }
 

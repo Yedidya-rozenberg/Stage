@@ -57,10 +57,11 @@ export class UnitComponent implements OnInit {
 
   update() {
     this.unitService.updateUnit(this.unit).subscribe(
-      (unit:unit) => {
+      (unit: unit) => {
         this.unit = unit;
         this.toastr.success("Unit updated");
         this.questionsList = unit.questions.split(".");
+        this.coursesService.getCourse(this.course.details!.courseName);
       }
     );
     this.EditToggle();
