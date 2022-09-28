@@ -107,9 +107,4 @@ export class CoursesService {
     this.accountService.currentUser$.pipe(take(1)).subscribe(
       user => { this.TeacherMode = (user?.username == fullCourse.details?.teacherName) });
   }
-
-  addCourse(): void {
-
-  }
-
 }

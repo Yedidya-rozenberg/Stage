@@ -58,9 +58,4 @@ export class AccountService {
         })
       )
   }
-
-  updateDetiles(): void {
-
-  }
-
 }

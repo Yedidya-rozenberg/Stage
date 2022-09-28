@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { MembersComponent } from './members/members.component';
 import { AuthGuard } from './guards/auth.guard';
-import { TestErrorComponent } from './Errors/test-error/test-error.component';
 import { NotFoundComponent } from './Errors/not-found/not-found.component';
-import { ServerErrorComponent } from './Errors/server-error/server-error.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseComponent } from './course/course.component';
 import { UnitComponent } from './unit/unit.component';
-import { DetilesEditComponent } from './detiles-edit/detiles-edit.component';
 import { AccessableGuard } from './guards/accessable.guard';
 import { UnitResolver } from './resolvers/unit.resolver';
 
@@ -29,21 +25,15 @@ const routes: Routes = [
         canActivate: [AccessableGuard],
         runGuardsAndResolvers: 'always',
         children: [
-          { path: 'users', component: MembersComponent },
           { path: 'course', component: CourseComponent },
           {
             path: 'unit/:unitId', component: UnitComponent,
             resolve: { unit: UnitResolver }
           },
-          { path: 'member/edit', component: DetilesEditComponent },
         ]
       }]
   },
-  {
-    path: 'errors', component: TestErrorComponent
-  },
   { path: 'not-found', component: NotFoundComponent },
-  { path: 'server-error', component: ServerErrorComponent },
   {
     path: '**',
     pathMatch: 'full',

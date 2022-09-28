@@ -34,7 +34,7 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            if (course.CourseStatus == false && user.UserName != course.Teacher.UserName)
+            if (course.CourseStatus == false && user.Id != course.TeacherID)
             {
                 return BadRequest("Course is not active");
             }

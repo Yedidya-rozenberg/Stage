@@ -6,7 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 }
                 throw modelStateErrors.flat();
               } else if (typeof (err) === 'object') {
-                this.toaster.error((err.statusText === 'OK' ? "Bed request" : err.statusText), err.satus)
+                this.toaster.error((err.statusText === 'OK' ? "Bed request</br>" + (err.error?err.error:"") : err.statusText), err.satus,{ closeButton: true, timeOut: 4000, progressBar: true, enableHtml: true } )
                 throw err;
               }
               else {
@@ -41,14 +41,13 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
-              this.toaster.error(err.statusText === 'OK' ? "Unauthorizied" : err.statusText, err.satus)
+              this.toaster.error((err.statusText === 'OK' ? "Unauthorizied</br>" + (err.error?err.error:"") : err.statusText) , err.satus,{ closeButton: true, timeOut: 4000, progressBar: true, enableHtml: true } )
               break;
             case 404:
               this.router.navigateByUrl('/not-found');
               break;
             case 500:
-              const navigationExtras: NavigationExtras = { state: { error: err.error } }
-              this.router.navigateByUrl('/server-error', navigationExtras);
+              this.toaster.error((err.statusText === 'OK' ? "Server error</br>" + (err.error?err.error:"") : err.statusText), err.satus,{ closeButton: true, timeOut: 4000, progressBar: true, enableHtml: true })
               break;
             default:
               this.toaster.error("Somthing unexpected want wrong");
