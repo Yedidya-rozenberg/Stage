@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { MembersComponent } from './members/members.component';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './modules/shared.module';
 import { RegisterComponent } from './register/register.component';
 import { TextInputComponent } from './forms/text-input/text-input.component';
@@ -51,24 +51,24 @@ import { TestErrorComponent } from './Errors/test-error/test-error.component';
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule
-    ],
-    providers: [
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: ErrorInterceptor,
-        multi: true
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: JwtInterceptor,
-        multi: true
-      },
-      {
-        provide: HTTP_INTERCEPTORS,
-        useClass: LoadingInterceptor,
-        multi: true
-      }
-    ],
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

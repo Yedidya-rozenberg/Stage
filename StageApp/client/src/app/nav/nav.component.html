@@ -1,32 +1,33 @@
 <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-primary">
   <div class="container">
     <a class="navbar-brand" routerLink="/">
-    <h3>Stage</h3>
-    <p>A world of knowledge</p>  
+      <h3>Stage</h3>
+      <p>A world of knowledge</p>
     </a>
-      <ng-container *ngIf="currentUser$ | async" >
-        <div class="navbar-nav mr-auto">
-          <a class="nav-link" routerLinkActive="active" routerLink="/courses">My courses</a>
-        </div>
-      </ng-container>
-
-
-      <div class="dropdown" *ngIf="currentUser$ |async as user" dropdown>
-        <img class="img" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}" srcset="">
-        <a class="dropdown-toggle text-light" dropdownToggle >Welcome {{user.knownAs | titlecase}}</a>
-        <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item" routerLink="member/edit" >Edit Profile</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()">Logout</a>
-        </div>
+    <ng-container *ngIf="currentUser$ | async">
+      <div class="navbar-nav mr-auto">
+        <a class="nav-link" routerLinkActive="active" routerLink="/courses">My courses</a>
       </div>
+    </ng-container>
 
-      <form *ngIf="!(currentUser$ |async)" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()" autocomplete="off"> 
-        <div>       
-        <input name="username"  [(ngModel)]="model.username"  class="form-control" type="text" placeholder="Username">
+
+    <div class="dropdown" *ngIf="currentUser$ |async as user" dropdown>
+      <img class="img" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}" srcset="">
+      <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{user.knownAs | titlecase}}</a>
+      <div class="dropdown-menu mt-3" *dropdownMenu>
+        <a class="dropdown-item" routerLink="member/edit">Edit Profile</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </div>
+
+    <form *ngIf="!(currentUser$ |async)" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()"
+      autocomplete="off">
+      <div>
+        <input name="username" [(ngModel)]="model.username" class="form-control" type="text" placeholder="Username">
         <input name="password" [(ngModel)]="model.password" class="form-control" type="password" placeholder="Password">
       </div>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-      </form>
-    </div>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+    </form>
+  </div>
 </nav>

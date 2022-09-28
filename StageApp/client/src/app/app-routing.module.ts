@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MembersComponent } from './members/members.component';
@@ -15,7 +15,7 @@ import { UnitResolver } from './resolvers/unit.resolver';
 
 
 const routes: Routes = [
-  {  path: '', component: HomeComponent,pathMatch: 'full'},     
+  { path: '', component: HomeComponent, pathMatch: 'full' },
 
 
   {
@@ -24,16 +24,20 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     children: [
       { path: 'courses', component: CoursesComponent },
-      {path: '',
-      canActivate: [AccessableGuard],
-      runGuardsAndResolvers: 'always',
-      children: [
-      { path: 'users', component: MembersComponent },
-      { path: 'course', component: CourseComponent },
-      { path: 'unit/:unitId', component: UnitComponent,
-      resolve: { unit:UnitResolver }},
-      { path: 'member/edit', component: DetilesEditComponent },
-    ]}]
+      {
+        path: '',
+        canActivate: [AccessableGuard],
+        runGuardsAndResolvers: 'always',
+        children: [
+          { path: 'users', component: MembersComponent },
+          { path: 'course', component: CourseComponent },
+          {
+            path: 'unit/:unitId', component: UnitComponent,
+            resolve: { unit: UnitResolver }
+          },
+          { path: 'member/edit', component: DetilesEditComponent },
+        ]
+      }]
   },
   {
     path: 'errors', component: TestErrorComponent

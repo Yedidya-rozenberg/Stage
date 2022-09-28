@@ -1,19 +1,24 @@
-.dropdown-toggle, .dropdown-item {
-    cursor: pointer;
-  }
-  .img {
-    max-height: 50px;
-    border: 2px solid white;
-    display: inline;
-    margin-right: 1rem;
-  }
-  .form-control {
-    margin: 2px;
-    margin-right: 2cm;
-  }
-  .form-inline {
-    display: flex;
-  }
-  .btn {
-    margin: 1rem;
-  }
+.dropdown-toggle,
+.dropdown-item {
+  cursor: pointer;
+}
+
+.img {
+  max-height: 50px;
+  border: 2px solid white;
+  display: inline;
+  margin-right: 1rem;
+}
+
+.form-control {
+  margin: 2px;
+  margin-right: 2cm;
+}
+
+.form-inline {
+  display: flex;
+}
+
+.btn {
+  margin: 1rem;
+}

@@ -1,9 +1,11 @@
 .container {
   margin-top: 5%;
 }
+
 .row {
   margin: 2rem;
 }
+
 .flex-container {
   display: flex;
   flex-direction: row;
@@ -11,8 +13,8 @@
   justify-content: space-between;
 
 }
-.col-2 {
-flex-grow: inherit;
-margin-inline: 7%;
-}
 
+.col-2 {
+  flex-grow: inherit;
+  margin-inline: 7%;
+}

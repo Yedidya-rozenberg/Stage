@@ -3,5 +3,5 @@ import { unitName } from "./unitName";
 
 export class courseUnits {
     details: course | undefined;
-    units: unitName[]| undefined;
+    units: unitName[] | undefined;
 }

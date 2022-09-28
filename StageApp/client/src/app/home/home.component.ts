@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { course } from '../models/cours';
 import { Pagination } from '../models/pagination';
 import { CourseParams } from '../models/params/CourseParams';
-import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { CoursesService } from '../services/courses.service';
 
@@ -23,8 +20,7 @@ export class HomeComponent implements OnInit {
   pagination: Pagination | undefined;
 
 
-  constructor(private http: HttpClient,
-    private accountService: AccountService,
+  constructor(private accountService: AccountService,
     private router: Router,
     private courseService: CoursesService) { }
 

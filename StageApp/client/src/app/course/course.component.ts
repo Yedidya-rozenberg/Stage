@@ -1,11 +1,8 @@
-import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { courseUpdate } from '../models/courseUpdate';
 import { courseUnits } from '../models/courseUnits';
-import { AccountService } from '../services/account.service';
 import { CoursesService } from '../services/courses.service';
-import { course } from '../models/cours';
-import { NgForm, NgModel } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UnitsService } from '../services/units.service';
 import { Subscription } from 'rxjs';
@@ -29,10 +26,8 @@ export class CourseComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private route: ActivatedRoute,
-    private coursesService: CoursesService,
+  constructor(private coursesService: CoursesService,
     private unitsService: UnitsService,
-    private accountService: AccountService,
     private toastr: ToastrService,
   ) { }
 
@@ -83,7 +78,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   removeUnit(unitID: number) {
     this.view = false;
     this.unitsService.removeUnit(unitID)
-      .subscribe((units) => {
+      .subscribe(() => {
         this.course.units = this.course.units?.filter(unit => unit.unitID !== unitID);
         this.toastr.success("Unit successfully removed");
       })

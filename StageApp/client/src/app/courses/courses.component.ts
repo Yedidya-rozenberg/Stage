@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TruthyTypesOf } from 'rxjs';
 import { course } from '../models/cours';
 import { Pagination } from '../models/pagination';
 import { CourseParams } from '../models/params/CourseParams';

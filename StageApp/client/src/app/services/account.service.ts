@@ -10,19 +10,19 @@ import { User } from '../models/user';
 export class AccountService {
 
   baseUrl = environment.apiUrl;
-  
+
   private currentUserSource$ = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource$.asObservable();
   user: User | undefined;
 
   constructor(private http: HttpClient) {
-   this.currentUser$.pipe(take(1)).subscribe((user:any)=> {
+    this.currentUser$.pipe(take(1)).subscribe((user: any) => {
       this.user = user;
-   })
+    })
   }
-  
-  
-  login(model: any){
+
+
+  login(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', model)
       .pipe(
         map((response: User) => {
@@ -50,7 +50,7 @@ export class AccountService {
     return this.http.post<User>(this.baseUrl + 'account/register', model)
       .pipe(
         map((user: User) => {
-          if(user){
+          if (user) {
             localStorage.setItem('user', JSON.stringify(user));
             this.currentUserSource$.next(user);
           }
@@ -59,8 +59,8 @@ export class AccountService {
       )
   }
 
-  updateDetiles():void{
-    
+  updateDetiles(): void {
+
   }
-  
+
 }

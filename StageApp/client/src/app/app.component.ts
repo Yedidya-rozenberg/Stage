@@ -10,24 +10,20 @@ import { AccountService } from './services/account.service';
 })
 export class AppComponent implements OnInit {
   title = 'Stage';
-  constructor(private http:HttpClient, 
+  constructor(private http: HttpClient,
     private accountService: AccountService,
-    private router:Router) {
-    
-  }
- 
+    private router: Router) { }
+
   ngOnInit(): void {
-
-this.setCurrentUser();
-this.router.navigateByUrl('/')
-
-}
-setCurrentUser() {
-  const userFromLS:any = localStorage.getItem('user');
-  const user = JSON.parse(userFromLS);
-  if(user){
-        this.accountService.setCurrentUser(user);
+    this.setCurrentUser();
+    this.router.navigateByUrl('/')
   }
-}
 
+  setCurrentUser() {
+    const userFromLS: any = localStorage.getItem('user');
+    const user = JSON.parse(userFromLS);
+    if (user) {
+      this.accountService.setCurrentUser(user);
+    }
+  }
 }

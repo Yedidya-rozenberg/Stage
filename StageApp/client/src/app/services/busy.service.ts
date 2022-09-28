@@ -18,14 +18,14 @@ export class BusyService {
       {
         bdColor: 'rgb(255,255,255,0)',
         color: '#333333',
-        type: 'line-scale-party'
+        type: 'ball-scale-multiple'
       }
     )
   }
 
   idle() {
     this.busyRequestCount--;
-    if(this.busyRequestCount <= 0) {
+    if (this.busyRequestCount <= 0) {
       this.busyRequestCount = 0;
       this.spinnerService.hide();
     }

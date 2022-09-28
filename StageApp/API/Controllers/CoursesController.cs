@@ -37,6 +37,10 @@ namespace API.Controllers
             else
             {
                 var user = await _unitOfWork.UserRepository.GetUserByUserNameAsync(User.GetUsername());
+                if (user == null)
+                {
+                    return Unauthorized();
+                }
                 courseParams.CurrentUser = user.UserName;
                 courses = await _unitOfWork.CourseRepository.GetCoursesAsync(courseParams);
             }

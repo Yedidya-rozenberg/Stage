@@ -7,14 +7,12 @@ import { PaginatedResult } from '../models/pagination';
 import { CourseParams } from '../models/params/CourseParams';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
-import { BehaviorSubject, map, Observable, of, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, take, tap } from 'rxjs';
 import { getPaginatedResult, getPaginationParams } from './paginationHelper';
 import { courseUnits } from '../models/courseUnits';
-import { unit } from '../models/unit';
 import { unitName } from '../models/unitName';
 import { unitParams } from '../models/params/unitParams';
 import { UnitsService } from './units.service';
-import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -38,8 +36,7 @@ export class CoursesService {
 
   constructor(private http: HttpClient,
     private accountService: AccountService,
-    private unitsService: UnitsService,
-    private router: Router) {
+    private unitsService: UnitsService) {
     accountService.currentUser$.pipe(take(1)).subscribe((user: any) => {
       this.user = user;
     })
@@ -108,7 +105,7 @@ export class CoursesService {
   isTeacher() {
     const fullCourse: courseUnits = this.courentCourseSource$.value as courseUnits;
     this.accountService.currentUser$.pipe(take(1)).subscribe(
-      user => { this.TeacherMode = (user?.username == fullCourse.details?.teacherName) } );
+      user => { this.TeacherMode = (user?.username == fullCourse.details?.teacherName) });
   }
 
   addCourse(): void {
