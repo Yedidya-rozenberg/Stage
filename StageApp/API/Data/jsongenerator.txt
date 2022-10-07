@@ -45,6 +45,7 @@
   '{{repeat(10)}}',
   {
     CourseName:'{{lorem( 3, "words")}}',
+    CourseDescription: '{{lorem( 1, "sentences")}}',
     CourseStatus:true,
     Photo:{ Url:'https://picsum.photos/id/' +  '{{integer( 200,300 )}}' + '/300/200'},
     TeacherID:'{{integer(11,14)}}',
@@ -55,7 +56,7 @@
 
     //Units
     [
-      '{{repeat(integer(3,6))}}',
+      '{{repeat(50)}}',
       {
       UnitName:'{{lorem( 1, "words")}}',
               StudyContent: '{{lorem (integer(3,6), "paragraphs")}}',
