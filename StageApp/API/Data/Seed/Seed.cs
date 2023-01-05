@@ -47,7 +47,7 @@ namespace API.Data
         {
             var random = new Random();
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var course = courses[random.Next(0, courses.Count)];
                 course.Students.Add(students[random.Next(0, students.Count)]);
