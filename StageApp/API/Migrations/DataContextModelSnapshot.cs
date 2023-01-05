@@ -3,20 +3,19 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
+#nullable disable
 
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220615155717_Request_Manager")]
-    partial class Request_Manager
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.13");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
 
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
@@ -36,6 +35,9 @@ namespace API.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("KnownAs")
                         .HasColumnType("TEXT");
@@ -60,6 +62,8 @@ namespace API.Migrations
                     b.ToTable("Users");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("AppUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("API.Entities.Course", b =>
@@ -67,6 +71,9 @@ namespace API.Migrations
                     b.Property<int>("CourseID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("CourseDescription")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CourseName")
                         .HasColumnType("TEXT");
@@ -82,25 +89,6 @@ namespace API.Migrations
                     b.HasIndex("TeacherID");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("API.Entities.Interest", b =>
-                {
-                    b.Property<int>("InterestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Name")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("InterestId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Interest");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -130,47 +118,6 @@ namespace API.Migrations
                         .IsUnique();
 
                     b.ToTable("Photos");
-                });
-
-            modelBuilder.Entity("API.Entities.Request", b =>
-                {
-                    b.Property<int>("RequestID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CourseID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RequestDetails")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("RequestStatus")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("RequestTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("StudentID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TeacherID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("RequestID");
-
-                    b.HasIndex("CourseID");
-
-                    b.HasIndex("ManagerId");
-
-                    b.HasIndex("StudentID");
-
-                    b.HasIndex("TeacherID");
-
-                    b.ToTable("requests");
                 });
 
             modelBuilder.Entity("API.Entities.Unit", b =>
@@ -213,13 +160,6 @@ namespace API.Migrations
                     b.ToTable("CourseStudent");
                 });
 
-            modelBuilder.Entity("API.Entities.Manager", b =>
-                {
-                    b.HasBaseType("API.Entities.AppUser");
-
-                    b.HasDiscriminator().HasValue("Manager");
-                });
-
             modelBuilder.Entity("API.Entities.Student", b =>
                 {
                     b.HasBaseType("API.Entities.AppUser");
@@ -251,15 +191,6 @@ namespace API.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("API.Entities.Interest", b =>
-                {
-                    b.HasOne("API.Entities.Student", "Student")
-                        .WithMany("Interests")
-                        .HasForeignKey("StudentId");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
@@ -273,35 +204,6 @@ namespace API.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("API.Entities.Request", b =>
-                {
-                    b.HasOne("API.Entities.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Manager", "Manager")
-                        .WithMany()
-                        .HasForeignKey("ManagerId");
-
-                    b.HasOne("API.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentID");
-
-                    b.HasOne("API.Entities.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherID");
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Manager");
-
-                    b.Navigation("Student");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("API.Entities.Unit", b =>
@@ -340,11 +242,6 @@ namespace API.Migrations
                     b.Navigation("Photo");
 
                     b.Navigation("Units");
-                });
-
-            modelBuilder.Entity("API.Entities.Student", b =>
-                {
-                    b.Navigation("Interests");
                 });
 
             modelBuilder.Entity("API.Entities.Teacher", b =>
