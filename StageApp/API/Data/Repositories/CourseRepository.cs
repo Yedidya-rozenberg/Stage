@@ -84,7 +84,8 @@ namespace API.Data.Repositories
 
         public async Task<CourseDto> GetCourseByNameAsync(String name)
         {
-            var course = await _context.Courses.Include(c => c.Photo).Include(c => c.Teacher).Where(c => c.CourseName == name).FirstOrDefaultAsync();
+            var course = await _context.Courses.Include(c => c.Photo).Include(c => c.Students)
+            .Include(c => c.Teacher).Where(c => c.CourseName == name).FirstOrDefaultAsync();
             return _mapper.Map<CourseDto>(course);
         }
 

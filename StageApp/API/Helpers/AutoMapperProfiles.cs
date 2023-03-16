@@ -29,6 +29,9 @@ namespace API.Helpers
             ).ForMember(
                 dest => dest.TeacherName,
                 opt => opt.MapFrom(src => src.Teacher.UserName)
+            ).ForMember(
+                dest => dest.StudentsCount,
+                opt => opt.MapFrom(src => src.Students.Count)
             );
 
             CreateMap<MemberUpdateDto, AppUser>();

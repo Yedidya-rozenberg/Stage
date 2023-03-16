@@ -9,5 +9,7 @@ namespace API.DTOs
         public string PhotoUrl { get; set; }
         public int TeacherID { get; set; }
         public string TeacherName { get; set; }
+        public int StudentsCount { get; set; }
+        public MemberDto[] Students = new MemberDto[0];
     }
 }
